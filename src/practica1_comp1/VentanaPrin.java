@@ -5,6 +5,7 @@
  */
 package practica1_comp1;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import java.io.*;
+import java.util.LinkedList;
 
 /**
  *
@@ -44,6 +46,7 @@ public class VentanaPrin extends javax.swing.JFrame {
         scrolpan = new javax.swing.JScrollPane();
         jtxtarea1 = new javax.swing.JTextArea();
         n_analizar = new javax.swing.JButton();
+        b_prob_ar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         m_abrir = new javax.swing.JMenuItem();
@@ -62,6 +65,13 @@ public class VentanaPrin extends javax.swing.JFrame {
         n_analizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 n_analizarActionPerformed(evt);
+            }
+        });
+
+        b_prob_ar.setText("Probando armando");
+        b_prob_ar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_prob_arActionPerformed(evt);
             }
         });
 
@@ -105,7 +115,10 @@ public class VentanaPrin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(n_analizar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(n_analizar)
+                        .addGap(33, 33, 33)
+                        .addComponent(b_prob_ar))
                     .addComponent(scrolpan, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(224, Short.MAX_VALUE))
         );
@@ -114,9 +127,14 @@ public class VentanaPrin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(scrolpan, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(n_analizar)
-                .addGap(43, 43, 43))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(n_analizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(b_prob_ar)))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -239,6 +257,243 @@ public class VentanaPrin extends javax.swing.JFrame {
        
     }//GEN-LAST:event_n_analizarActionPerformed
 
+    NodeArbol root;
+    private void b_prob_arActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_prob_arActionPerformed
+        // TODO add your handling code here:
+        LinkedList<String> pref_er = new LinkedList<>();
+//        pref_er.add("3");
+//        pref_er.add("4");
+//        pref_er.add("+");
+//        pref_er.add("2");
+//        pref_er.add("*");
+//        pref_er.add("4");
+//        pref_er.add("-");
+
+//        pref_er.add("-");
+//        pref_er.add("*");
+//        pref_er.add("/");
+//        pref_er.add("15");
+//        pref_er.add("-");
+//        pref_er.add("7");
+//        pref_er.add("+");
+//        pref_er.add("1");
+//        pref_er.add("1");
+//        pref_er.add("3");
+//        pref_er.add("+");
+//        pref_er.add("2");
+//        pref_er.add("+");
+//        pref_er.add("1");
+//        pref_er.add("1");
+
+
+//        ///para expresion1
+//        pref_er.add(".");
+//        pref_er.add("|");
+//        pref_er.add("Los ");
+//        pref_er.add("El ");
+//        pref_er.add(".");
+//        pref_er.add("+");
+//        pref_er.add("|");
+//        pref_er.add("vocales");
+//        pref_er.add("otrasLetras");
+//        pref_er.add("*");
+//        pref_er.add("|");
+//        pref_er.add("abecedario");
+//        pref_er.add("_");
+        
+//        ///para Expresion2 
+//        pref_er.add(".");
+//        pref_er.add("+");
+//        pref_er.add("abecedario");
+//        pref_er.add(".");
+//        pref_er.add("conjnum");
+//        pref_er.add("?");
+//        pref_er.add(".");
+//        pref_er.add(":");
+//        pref_er.add("+");
+//        pref_er.add("abecedario");
+
+//        ///para Expresion3  
+//        pref_er.add(".");
+//        pref_er.add(".");
+//        pref_er.add(".");
+//        pref_er.add(".");
+//        pref_er.add(".");
+//        pref_er.add(".");
+//        pref_er.add("*");
+//        pref_er.add("|");
+//        pref_er.add("abecedario");
+//        pref_er.add("_");
+//        pref_er.add("+");
+//        pref_er.add("conjnum");
+//        pref_er.add(">");
+//        pref_er.add("+");
+//        pref_er.add("conjnum");
+//        pref_er.add("es ");
+//        pref_er.add("|");
+//        pref_er.add("TRUE");
+//        pref_er.add("FALSE");
+//        pref_er.add("punto");
+
+///para operaciones   
+        pref_er.add(".");
+        pref_er.add("+");
+        pref_er.add("digito");
+        pref_er.add("+");
+        pref_er.add(".");
+        pref_er.add("|");
+        pref_er.add("mas");
+        pref_er.add("|");
+        pref_er.add("-");
+        pref_er.add("|");
+        pref_er.add("asteris");
+        pref_er.add("/");
+        pref_er.add("+");
+        pref_er.add("digito");
+        
+        
+        
+//        pref_er.add(".");
+//        pref_er.add("3");
+//        pref_er.add("5");
+        
+//        //pref_er.add("/");
+//        pref_er.add(".");
+//        pref_er.add(".");
+//        pref_er.add("5");
+//        pref_er.add("3");
+//        pref_er.add("6");
+
+
+//        pref_er.add(".");
+//        pref_er.add("letra");
+//        pref_er.add("*");
+//        pref_er.add("|");
+//        pref_er.add("-");
+//        pref_er.add("|");
+//        pref_er.add("letra");
+//        pref_er.add("digito");
+
+        
+        Armando_RPN arbol =  new Armando_RPN(pref_er);
+        //NodeArbol root;
+        root = arbol.leyendo_expresiones();
+        JOptionPane.showMessageDialog(null,"res arbol: " + root);
+        this.Graficando_arbol();
+        
+        
+        //JOptionPane.showMessageDialog(null,"res arbol: " + arbol.leyendo_expresiones());
+        
+    }//GEN-LAST:event_b_prob_arActionPerformed
+
+    //////////////////////////////////////inicio graficando arbol
+    public boolean Graficando_arbol(){
+
+        StringBuilder graf  = new StringBuilder();
+        //graf.append("arbol_avl.txt", "w");
+        graf.append("digraph G { \n");
+        graf.append("rankdir=TB;\n");
+        graf.append("graph [nodesep=0.5 ];\n");
+        graf.append("node [shape = record, fillcolor=seashell2];\n");
+        this.VerArbol(graf);
+        graf.append("\n}\n");
+        
+        return this.graf_arbolavl(graf.toString());
+  
+    }
+    
+    public void VerArbol(StringBuilder graf){ 
+        this.VerArbol(root, graf);
+        //this.VerArbol(this.root, graf);
+    }
+    
+    public void VerArbol(NodeArbol root_ac, StringBuilder graf){ 
+        if (root_ac != null){
+            this.VerArbol(root_ac.left, graf);
+            NodeArbol tempo = root_ac;
+            if (tempo.right != null){               
+                //graf.append("\"nodo"+ root_ac.lexema+"\"");
+                //graf.append(":C1 -> \"nodo"+ tempo.right.lexema + "\"\n");
+                
+                graf.append("\"nodo"+ root_ac.lexema + root_ac.id + "\"");
+                graf.append(":C1 -> \"nodo"+ tempo.right.lexema + tempo.right.id + "\"\n");
+            }             
+            if (tempo.left != null){
+                //graf.append("\"nodo"+ root_ac.lexema+"\"");
+                //graf.append(":C0 -> \"nodo"+ tempo.left.lexema + "\"\n");
+                
+                graf.append("\"nodo"+ root_ac.lexema+root_ac.id +"\"");
+                graf.append(":C0 -> \"nodo"+ tempo.left.lexema +tempo.left.id + "\"\n");
+            }
+            //graf.append("\"nodo"+ root_ac.lexema  +"\" [ label =\"<C0>|");
+            graf.append("\"nodo"+ root_ac.lexema +root_ac.id +"\" [ label =\"<C0>|");
+            
+//            if (root_ac.lexema.equals("|")){
+//                graf.append(" "+ "l" /*+ "\\n"*/);
+//            } else {
+                graf.append( "\\"+root_ac.lexema /*+ "\\n"*/);
+//            }
+            
+            //graf.append("Altura: "+ root_ac.height+ "\\n");
+            
+            //graf.append("FE: "+ root_ac.fe+ "\\n" );
+            
+            //graf.append("Timestamp: "+ formato_fecha.format(root_ac.fecha_creacion) + "\\n" );
+            //graf.append("Propietario: "+ root_ac.user+ "\\n" );
+            //String conte = root_ac.contenido.replace("\"", "\\\"");
+            //conte = conte.replace("{", "\\{");
+            //conte = conte.replace("}", "\\}");
+            
+            //if (conte.length() >= 50 ) {
+            //    conte = conte.substring(0,48) + "...";
+            //}
+            //graf.append("Contenido: " + conte );
+            
+            graf.append("|<C1>\"]; \n");
+
+            this.VerArbol(root_ac.right, graf);
+        }
+    }
+    
+    
+    public boolean graf_arbolavl(String grafica){
+        //File archivo =new File("hash_user.txt");
+        try
+            {
+            File archivo =new File("arbol_avl.txt");
+            FileWriter escribir= new FileWriter(archivo);
+            escribir.write(grafica);
+            escribir.close();
+            }
+
+            catch(Exception e)
+            {
+            JOptionPane.showMessageDialog(null, "Error al escribir","NANI",JOptionPane.ERROR_MESSAGE);
+            return false;
+            }
+        
+        try {
+
+            Runtime rt = Runtime.getRuntime();
+            //rt.exec( cmd );
+            Process p = rt.exec("dot -Tpng arbol_avl.txt -o arbol_avl.jpg");
+            p.waitFor();
+            //rt.exec("hash_user.jpg");
+            
+            Desktop.getDesktop().open(new File("arbol_avl.jpg"));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex,"NANI",JOptionPane.ERROR_MESSAGE);
+                return false;
+            } finally {}
+        
+        return true;
+        
+    }
+    
+    //////////////////////////////////fin graficando arbol
+    
     public void GuardarAhora(File archivo_g)
     {
         //if (archivo_g.getName().endsWith("dat"))
@@ -333,6 +588,7 @@ public class VentanaPrin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_prob_ar;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;

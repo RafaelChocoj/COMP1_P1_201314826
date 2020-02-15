@@ -348,10 +348,14 @@ public class Sintactico {
     }
     
     public void Imprime_ER(){
+        /*probando armando el arbol*/
+        
         for (int i = 0; i < lis_ex_reg.size(); ++i)
         { 
             JOptionPane.showMessageDialog(null,  lis_ex_reg.get(i).name_exreg + " - "
                     +lis_ex_reg.get(i).prefijo );
+            Armando_RPN ndos_arbol = new Armando_RPN(lis_ex_reg.get(i).prefijo);
+            ndos_arbol.leyendo_expresiones();
         }
         
     }

@@ -1,0 +1,33 @@
+digraph G { 
+rankdir=TB;
+graph [nodesep=0.5 ];
+node [shape = record, fillcolor=seashell2];
+"nodo+1":C1 -> "nododigito2"
+"nodo+1" [ label ="<C0>|\+|<C1>"]; 
+"nododigito2" [ label ="<C0>|\digito|<C1>"]; 
+"nodo.0":C1 -> "nodo+3"
+"nodo.0":C0 -> "nodo+1"
+"nodo.0" [ label ="<C0>|\.|<C1>"]; 
+"nodo+3":C1 -> "nodo.4"
+"nodo+3" [ label ="<C0>|\+|<C1>"]; 
+"nodomas6" [ label ="<C0>|\mas|<C1>"]; 
+"nodo|5":C1 -> "nodo|7"
+"nodo|5":C0 -> "nodomas6"
+"nodo|5" [ label ="<C0>|\||<C1>"]; 
+"nodo-8" [ label ="<C0>|\-|<C1>"]; 
+"nodo|7":C1 -> "nodo|9"
+"nodo|7":C0 -> "nodo-8"
+"nodo|7" [ label ="<C0>|\||<C1>"]; 
+"nodoasteris10" [ label ="<C0>|\asteris|<C1>"]; 
+"nodo|9":C1 -> "nodo/11"
+"nodo|9":C0 -> "nodoasteris10"
+"nodo|9" [ label ="<C0>|\||<C1>"]; 
+"nodo/11" [ label ="<C0>|\/|<C1>"]; 
+"nodo.4":C1 -> "nodo+12"
+"nodo.4":C0 -> "nodo|5"
+"nodo.4" [ label ="<C0>|\.|<C1>"]; 
+"nodo+12":C1 -> "nododigito13"
+"nodo+12" [ label ="<C0>|\+|<C1>"]; 
+"nododigito13" [ label ="<C0>|\digito|<C1>"]; 
+
+}
