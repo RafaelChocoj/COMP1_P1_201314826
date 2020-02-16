@@ -14,10 +14,14 @@ import java.util.LinkedList;
 public class VarExpReg {
     
     String name_exreg;
-    LinkedList<String> prefijo;
+    LinkedList<ER_unitario> prefijo;
     
-    public VarExpReg (String name_exreg, LinkedList<String> prefijo){
+    public VarExpReg (String name_exreg, LinkedList<ER_unitario> prefijo){
         this.name_exreg = name_exreg;
         this.prefijo = prefijo;
     }
+    
+//        public String toString(){
+//        return this.prefijo.get(0).er;
+//    }
 }

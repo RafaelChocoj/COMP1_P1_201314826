@@ -260,7 +260,8 @@ public class VentanaPrin extends javax.swing.JFrame {
     NodeArbol root;
     private void b_prob_arActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_prob_arActionPerformed
         // TODO add your handling code here:
-        LinkedList<String> pref_er = new LinkedList<>();
+        LinkedList<ER_unitario> pref_er = new LinkedList<>();
+        
 //        pref_er.add("3");
 //        pref_er.add("4");
 //        pref_er.add("+");
@@ -336,20 +337,20 @@ public class VentanaPrin extends javax.swing.JFrame {
 //        pref_er.add("punto");
 
 ///para operaciones   
-        pref_er.add(".");
-        pref_er.add("+");
-        pref_er.add("digito");
-        pref_er.add("+");
-        pref_er.add(".");
-        pref_er.add("|");
-        pref_er.add("mas");
-        pref_er.add("|");
-        pref_er.add("-");
-        pref_er.add("|");
-        pref_er.add("asteris");
-        pref_er.add("/");
-        pref_er.add("+");
-        pref_er.add("digito");
+        pref_er.add(new ER_unitario(".", "O"));
+        pref_er.add(new ER_unitario("+", "O"));
+        pref_er.add(new ER_unitario("digito", "CO"));
+        pref_er.add(new ER_unitario("+", "O"));
+        pref_er.add(new ER_unitario(".", "O"));
+        pref_er.add(new ER_unitario("|", "O"));
+        pref_er.add(new ER_unitario("+", "CA")); /// mas
+        pref_er.add(new ER_unitario("|", "O"));
+        pref_er.add(new ER_unitario("-", "CA"));
+        pref_er.add(new ER_unitario("|", "O"));
+        pref_er.add(new ER_unitario("*", "CA")); ///asterisco
+        pref_er.add(new ER_unitario("/", "CA"));
+        pref_er.add(new ER_unitario("+", "O"));
+        pref_er.add(new ER_unitario("digito", "CO"));
         
         
         
@@ -379,7 +380,13 @@ public class VentanaPrin extends javax.swing.JFrame {
         //NodeArbol root;
         root = arbol.leyendo_expresiones();
         JOptionPane.showMessageDialog(null,"res arbol: " + root);
-        this.Graficando_arbol();
+        
+        Arbol tree = new Arbol(root);
+        
+        tree.preOrder();
+        tree.Graficando_arbol();
+        
+        //this.Graficando_arbol();
         
         
         //JOptionPane.showMessageDialog(null,"res arbol: " + arbol.leyendo_expresiones());

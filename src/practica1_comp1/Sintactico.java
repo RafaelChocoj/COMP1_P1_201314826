@@ -102,51 +102,53 @@ public class Sintactico {
     }
     
     /*expresion regular*/
-    public void ExReg(LinkedList<String> pref_er){
+    public void ExReg(LinkedList<ER_unitario> pref_er){
         
         //{
         boolean er_sim = false;
         if (preanalisis.idToken.equals("llaveIzq"))
         {
             match("llaveIzq"); //{
-            pref_er.add(preanalisis.lexema);
+            //pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema, "CO"));
             match("Identificador"); // conjunto
             match("llaveDer"); //}
         }
         //.
         else if (preanalisis.idToken.equals("Conca_por"))
         {
-            pref_er.add(preanalisis.lexema);
+            //pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema, "O"));
             match("Conca_por");
         }
         //|
         else if (preanalisis.idToken.equals("Disyun_mas"))
         {
-            pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema, "O"));
             match("Disyun_mas");
         }
         //?
         else if (preanalisis.idToken.equals("0oUnavez"))
         {
-            pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema, "O"));
             match("0oUnavez");
         }
         //*
         else if (preanalisis.idToken.equals("0oMasvez"))
         {
-            pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema, "O"));
             match("0oMasvez");
         }
         //+
         else if (preanalisis.idToken.equals("1oMasvez"))
         {
-            pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema, "O"));
             match("1oMasvez");
         }
         //cadena
         else if (preanalisis.idToken.equals("Cadena"))
         {
-            pref_er.add(preanalisis.lexema);
+            pref_er.add(new ER_unitario(preanalisis.lexema.replace("\"", "") , "CA"));
             match("Cadena");
         }
         else
@@ -181,7 +183,8 @@ public class Sintactico {
             match("Identificador"); // name variable
             match("Igualdad"); // ->
             
-            LinkedList<String> pref_er = new LinkedList<String>();
+            //LinkedList<String> pref_er = new LinkedList<String>();
+            LinkedList<ER_unitario> pref_er = new LinkedList<ER_unitario>();
             ExReg(pref_er);
             
             if (preanalisis.idToken.equals("PuntoComa"))
@@ -324,7 +327,7 @@ public class Sintactico {
         }
         else
         {
-            JOptionPane.showMessageDialog(null,"paso sintactico");// , lexema: " + preanalisis.lexema);
+            //JOptionPane.showMessageDialog(null,"paso sintactico");// , lexema: " + preanalisis.lexema);
 
         }
         if (!preanalisis.idToken.equals("UltimoToken"))
@@ -353,9 +356,15 @@ public class Sintactico {
         for (int i = 0; i < lis_ex_reg.size(); ++i)
         { 
             JOptionPane.showMessageDialog(null,  lis_ex_reg.get(i).name_exreg + " - "
-                    +lis_ex_reg.get(i).prefijo );
-            Armando_RPN ndos_arbol = new Armando_RPN(lis_ex_reg.get(i).prefijo);
-            ndos_arbol.leyendo_expresiones();
+                   /* +lis_ex_reg.get(i).toString()*/ );
+            
+            
+            ///
+            Armando_RPN arbol =  new Armando_RPN(lis_ex_reg.get(i).prefijo);
+            NodeArbol roor = arbol.leyendo_expresiones();
+            Arbol tree = new Arbol(roor);
+            tree.Graficando_arbol();
+        
         }
         
     }
