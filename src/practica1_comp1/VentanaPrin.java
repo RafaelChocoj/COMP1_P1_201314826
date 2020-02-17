@@ -353,15 +353,27 @@ public class VentanaPrin extends javax.swing.JFrame {
 //        pref_er.add(new ER_unitario("digito", "CO"));
         
    
-//para ejemplo de prac
+////para ejemplo de prac
 pref_er.add(new ER_unitario(".", "O"));
 pref_er.add(new ER_unitario("letra", "CO"));
 pref_er.add(new ER_unitario("*", "O"));
 pref_er.add(new ER_unitario("|", "O"));
 pref_er.add(new ER_unitario("_", "CA"));
 pref_er.add(new ER_unitario("|", "O"));
-pref_er.add(new ER_unitario("digito", "CO"));
 pref_er.add(new ER_unitario("letra", "CO"));
+pref_er.add(new ER_unitario("digito", "CO"));
+
+/////para pradtica de los procedimientos
+//pref_er.add(new ER_unitario(".", "O"));
+//pref_er.add(new ER_unitario(".", "O"));
+//pref_er.add(new ER_unitario("a", "CA"));
+//pref_er.add(new ER_unitario("*", "O"));
+//pref_er.add(new ER_unitario("|", "O"));
+//pref_er.add(new ER_unitario("a", "CA"));
+//pref_er.add(new ER_unitario("b", "CA"));
+//pref_er.add(new ER_unitario("b", "CA"));
+
+
         
 //        pref_er.add(".");
 //        pref_er.add("3");
@@ -388,15 +400,19 @@ pref_er.add(new ER_unitario("letra", "CO"));
         Armando_RPN arbol =  new Armando_RPN(pref_er);
         //NodeArbol root;
         root = arbol.leyendo_expresiones();
-        JOptionPane.showMessageDialog(null,"res arbol: " + root);
+        /////JOptionPane.showMessageDialog(null,"res arbol: " + root);
         
         Arbol tree = new Arbol(root);
         
         tree.preOrder();
-        tree.Graficando_arbol();
         
-        JOptionPane.showMessageDialog(null,"recor _pos ");
         tree.posOrder();
+        tree.Graficando_arbol();
+        JOptionPane.showMessageDialog(null,"recor _pos ");
+        
+        tree.posOrder_sig();
+        tree.graficando_siguientes();
+        
         
         //this.Graficando_arbol();
         

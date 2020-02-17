@@ -8,6 +8,7 @@ package practica1_comp1;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,9 +17,12 @@ import javax.swing.JOptionPane;
  */
 public class Arbol {
     
+    LinkedList<Siguientes> tabla_siguientes;
     NodeArbol root;
     public Arbol (NodeArbol root){
         this.root = root;
+        
+        tabla_siguientes = new LinkedList<>();
     }
     
     //////////////////////////////////////inicio graficando arbol
@@ -33,7 +37,7 @@ public class Arbol {
         this.VerArbol(graf);
         graf.append("\n}\n");
         
-        return this.graf_arbolavl(graf.toString());
+        return this.graf_arbolavl(graf.toString(), "arbol_a");
   
     }
     
@@ -63,7 +67,8 @@ public class Arbol {
             //graf.append("\"nodo"+ root_ac.lexema  +"\" [ label =\"<C0>|");
             graf.append("\"nodo"+ root_ac.lexema +root_ac.id +"\" [ label =\"<C0>"+root_ac.primeros+"|");
             
-            graf.append("ANUL: "+ root_ac.Anulable+ "\\n" );
+            //graf.append("ANUL: "+ root_ac.Anulable+ "\\n" );
+            graf.append(" "+ root_ac.Anulable+ "\\n" );
             
 //            if (root_ac.lexema.equals("|")){
 //                graf.append(" "+ "l" /*+ "\\n"*/);
@@ -71,9 +76,9 @@ public class Arbol {
                 graf.append( "\\"+root_ac.lexema + "\\n");
 //            }
             
-            //if (root_ac.right == null && root_ac.left == null)  {
+            if (root_ac.right == null && root_ac.left == null)  {
                 graf.append("iden: "+ root_ac.identificador+ "\\n");
-            //}
+            }
             
             
             //graf.append("Propietario: "+ root_ac.user+ "\\n" );
@@ -93,11 +98,12 @@ public class Arbol {
     }
     
     
-    public boolean graf_arbolavl(String grafica){
+    public boolean graf_arbolavl(String grafica, String name_g){
         //File archivo =new File("hash_user.txt");
         try
             {
-            File archivo =new File("arbol_avl.txt");
+            //File archivo =new File("arbol_avl.txt");
+            File archivo =new File(name_g+".txt");
             FileWriter escribir= new FileWriter(archivo);
             escribir.write(grafica);
             escribir.close();
@@ -113,11 +119,13 @@ public class Arbol {
 
             Runtime rt = Runtime.getRuntime();
             //rt.exec( cmd );
-            Process p = rt.exec("dot -Tpng arbol_avl.txt -o arbol_avl.jpg");
+            //Process p = rt.exec("dot -Tpng arbol_avl.txt -o arbol_avl.jpg");
+            Process p = rt.exec("dot -Tpng "+name_g+".txt -o "+name_g+".jpg");
             p.waitFor();
             //rt.exec("hash_user.jpg");
             
-            Desktop.getDesktop().open(new File("arbol_avl.jpg"));
+            //Desktop.getDesktop().open(new File("arbol_avl.jpg"));
+            Desktop.getDesktop().open(new File(name_g+".jpg"));
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -130,8 +138,42 @@ public class Arbol {
     }
     
     //////////////////////////////////fin graficando arbol
+    public boolean graficando_siguientes(){
+        StringBuilder graf  = new StringBuilder(); //grafica total
+        
+        StringBuilder hoja  = new StringBuilder(); // para nombre hoja
+        StringBuilder index  = new StringBuilder(); // para indice
+        StringBuilder sig  = new StringBuilder(); // para siguientes
+
+
+        graf.append("digraph G { rankdir=LR\n");
+        graf.append("node [shape=record];\n");
+        graf.append("node0[label=\"{");
+
+        hoja.append("{Hoja");
+        index.append("|{Hoja ID ");
+        sig.append("|{Siguientes ");
+        for (int i = 0; i < tabla_siguientes.size() ;i++) {
+            hoja.append("|" + tabla_siguientes.get(i).hoja );
+            index.append("|" + tabla_siguientes.get(i).id );
+            sig.append("|" + tabla_siguientes.get(i).nexts );
+        }
+        hoja.append("}\n");
+        index.append("}\n");
+        sig.append("}\n");
+        
+        graf.append(hoja);
+        graf.append(index);
+        graf.append(sig);
+        
+        graf.append("}\"];\n");
+        graf.append("}");
+
+        //JOptionPane.showMessageDialog(null,graf);
+        return this.graf_arbolavl(graf.toString(),"tab_sig");
+    }
     
-    
+    //////////////////////////////////
     /*recortofpd*/
     int iden;
     void preOrder()  
@@ -160,17 +202,133 @@ public class Arbol {
         {  
             posOrder(node.left);  
             posOrder(node.right);  
-            JOptionPane.showMessageDialog(null, node.lexema,"NANI",JOptionPane.ERROR_MESSAGE);
+            
+            if (node.right == null && node.left == null)  {/*JOptionPane.showMessageDialog(null, node.lexema);*/}else{
+                //JOptionPane.showMessageDialog(null, node.lexema,"NANI",JOptionPane.ERROR_MESSAGE);
+                setAnulPrimUl(node);
+            }
         }  
+    }
+    
+    void setAnulPrimUl(NodeArbol node){
+        
+        /*operador OR*/
+        if(node.lexema.equals("|")){
+            
+            /*set anulable*/
+            if (node.left.Anulable.equals("V") || node.right.Anulable.equals("V")) {
+                node.Anulable = "V";
+            } else {
+                node.Anulable = "F";
+            }
+            /*set primeros, ultmos*/
+            node.primeros = node.left.primeros + ", " + node.right.primeros;
+            node.ultimos = node.left.ultimos + ", " + node.right.ultimos;
+        }
+        /*operador AND*/
+        if(node.lexema.equals(".")){
+            if (node.left.Anulable.equals("V") && node.right.Anulable.equals("V")) {
+                node.Anulable = "V";
+            } else {
+                node.Anulable = "F";
+            }
+            /*set primero and*/
+            /*lrft = c1
+            si c1.anulable = V
+            c1 u c2
+            si no
+            ci
+            */
+            if (node.left.Anulable.equals("V")) {
+                node.primeros = node.left.primeros + ", " + node.right.primeros;
+            } if (node.left.Anulable.equals("F")) {
+                node.primeros = node.left.primeros;
+            }
+            /*set ultimo*/
+            /*right = c2*/
+            if (node.right.Anulable.equals("V")) {
+                node.ultimos = node.left.ultimos + ", " + node.right.ultimos;
+            } if (node.right.Anulable.equals("F")) {
+                node.ultimos = node.right.ultimos;
+            }
+            
+        }
+        //*
+        else if(node.lexema.equals("*")){
+            node.Anulable = "V";
+            /*suponiendo que el unico nodo que tiene lo 
+            tiene a la derecha*/
+            node.primeros = node.right.primeros;
+            node.ultimos = node.right.ultimos;
+            
+        }
+        
+        //?
+        //+
+    }
+    
+    /*recodiendo arbol para los siguientes*/
+    void posOrder_sig()  
+    {  
+        posOrder_sig(this.root);
+    }
+    void posOrder_sig(NodeArbol node)  
+    {  
+        if (node != null)  
+        {  
+            posOrder_sig(node.left);  
+            posOrder_sig(node.right);  
+            
+            if (node.right == null && node.left == null)  {}else{
+                TabSiguientes(node);
+            }
+        }  
+    }
+    
+    /*creando tabla de sisguientes*/
+    void TabSiguientes(NodeArbol node){
+        
+        //*
+        if(node.lexema.equals("*")){
+            /*rigth ultima -: left sguiente*/
+            String[] ultimos = node.ultimos.split(",");
+            for (int i = 0; i < ultimos.length ;i++) {
+                //JOptionPane.showMessageDialog(null, ultimos[i].trim());     
+                for (Siguientes tab : tabla_siguientes) {
+                    if (tab.id == Integer.parseInt(ultimos[i].trim())){
+                        tab.nexts = tab.nexts + ", " + node.primeros;
+                    }
+                }
+            }   
+        }
+        //.
+        else
+            if(node.lexema.equals(".")){
+            String[] ultimosC1 = node.left.ultimos.split(",");
+            for (int i = 0; i < ultimosC1.length ;i++) {
+                //JOptionPane.showMessageDialog(null, ultimosC1[i].trim());     
+                for (Siguientes tab : tabla_siguientes) {
+                    if (tab.id == Integer.parseInt(ultimosC1[i].trim())){
+                        tab.nexts = tab.nexts + ", " + node.right.primeros;
+                    }
+                }
+            }
+            
+        }
+        /*+*/
     }
     
     void SetIndentificador(NodeArbol node){
         if (node.right == null && node.left == null)  {
             iden++;
             node.identificador = iden;
-            node.primeros = iden;
-            node.ultimos = iden;
+            node.primeros = String.valueOf(iden);
+            node.ultimos = String.valueOf(iden);
             node.Anulable = "F";
+            
+            /*insertando en tabla*/
+            Siguientes sig = new Siguientes(node.lexema, iden, "");
+            tabla_siguientes.add(sig);
         }
         
     }

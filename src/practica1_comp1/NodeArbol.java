@@ -18,13 +18,13 @@ public class NodeArbol {
     
     String Anulable;
     int identificador;
-    int primeros;
-    int ultimos;
+    String primeros;
+    String ultimos;
 
     int height;
 
     
-    public NodeArbol (String lexema,int id, String Anulable, int identificador, int primeros,int ultimos ){
+    public NodeArbol (String lexema,int id, String Anulable, int identificador, String primeros,String ultimos ){
         
         this.id = id;
         this.lexema = lexema;
