@@ -336,23 +336,32 @@ public class VentanaPrin extends javax.swing.JFrame {
 //        pref_er.add("FALSE");
 //        pref_er.add("punto");
 
-///para operaciones   
-        pref_er.add(new ER_unitario(".", "O"));
-        pref_er.add(new ER_unitario("+", "O"));
-        pref_er.add(new ER_unitario("digito", "CO"));
-        pref_er.add(new ER_unitario("+", "O"));
-        pref_er.add(new ER_unitario(".", "O"));
-        pref_er.add(new ER_unitario("|", "O"));
-        pref_er.add(new ER_unitario("+", "CA")); /// mas
-        pref_er.add(new ER_unitario("|", "O"));
-        pref_er.add(new ER_unitario("-", "CA"));
-        pref_er.add(new ER_unitario("|", "O"));
-        pref_er.add(new ER_unitario("*", "CA")); ///asterisco
-        pref_er.add(new ER_unitario("/", "CA"));
-        pref_er.add(new ER_unitario("+", "O"));
-        pref_er.add(new ER_unitario("digito", "CO"));
+/////para operaciones   
+//        pref_er.add(new ER_unitario(".", "O"));
+//        pref_er.add(new ER_unitario("+", "O"));
+//        pref_er.add(new ER_unitario("digito", "CO"));
+//        pref_er.add(new ER_unitario("+", "O"));
+//        pref_er.add(new ER_unitario(".", "O"));
+//        pref_er.add(new ER_unitario("|", "O"));
+//        pref_er.add(new ER_unitario("+", "CA")); /// mas
+//        pref_er.add(new ER_unitario("|", "O"));
+//        pref_er.add(new ER_unitario("-", "CA"));
+//        pref_er.add(new ER_unitario("|", "O"));
+//        pref_er.add(new ER_unitario("*", "CA")); ///asterisco
+//        pref_er.add(new ER_unitario("/", "CA"));
+//        pref_er.add(new ER_unitario("+", "O"));
+//        pref_er.add(new ER_unitario("digito", "CO"));
         
-        
+   
+//para ejemplo de prac
+pref_er.add(new ER_unitario(".", "O"));
+pref_er.add(new ER_unitario("letra", "CO"));
+pref_er.add(new ER_unitario("*", "O"));
+pref_er.add(new ER_unitario("|", "O"));
+pref_er.add(new ER_unitario("_", "CA"));
+pref_er.add(new ER_unitario("|", "O"));
+pref_er.add(new ER_unitario("digito", "CO"));
+pref_er.add(new ER_unitario("letra", "CO"));
         
 //        pref_er.add(".");
 //        pref_er.add("3");
@@ -385,6 +394,9 @@ public class VentanaPrin extends javax.swing.JFrame {
         
         tree.preOrder();
         tree.Graficando_arbol();
+        
+        JOptionPane.showMessageDialog(null,"recor _pos ");
+        tree.posOrder();
         
         //this.Graficando_arbol();
         

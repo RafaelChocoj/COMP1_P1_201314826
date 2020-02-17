@@ -61,7 +61,7 @@ public class Arbol {
                 graf.append(":C0 -> \"nodo"+ tempo.left.lexema +tempo.left.id + "\"\n");
             }
             //graf.append("\"nodo"+ root_ac.lexema  +"\" [ label =\"<C0>|");
-            graf.append("\"nodo"+ root_ac.lexema +root_ac.id +"\" [ label =\"<C0>|");
+            graf.append("\"nodo"+ root_ac.lexema +root_ac.id +"\" [ label =\"<C0>"+root_ac.primeros+"|");
             
             graf.append("ANUL: "+ root_ac.Anulable+ "\\n" );
             
@@ -71,10 +71,11 @@ public class Arbol {
                 graf.append( "\\"+root_ac.lexema + "\\n");
 //            }
             
-            graf.append("iden: "+ root_ac.identificador+ "\\n");
+            //if (root_ac.right == null && root_ac.left == null)  {
+                graf.append("iden: "+ root_ac.identificador+ "\\n");
+            //}
             
             
-            //graf.append("Timestamp: "+ formato_fecha.format(root_ac.fecha_creacion) + "\\n" );
             //graf.append("Propietario: "+ root_ac.user+ "\\n" );
             //String conte = root_ac.contenido.replace("\"", "\\\"");
             //conte = conte.replace("{", "\\{");
@@ -85,7 +86,7 @@ public class Arbol {
             //}
             //graf.append("Contenido: " + conte );
             
-            graf.append("|<C1>\"]; \n");
+            graf.append("|<C1>"+root_ac.ultimos+"\"]; \n");
 
             this.VerArbol(root_ac.right, graf);
         }
@@ -132,26 +133,44 @@ public class Arbol {
     
     
     /*recortofpd*/
+    int iden;
     void preOrder()  
     {  
-        int iden = 0;
-        preOrder(this.root, iden);
+        iden = 0;
+        preOrder(this.root);
     }
-    void preOrder(NodeArbol node,int iden)  
+    void preOrder(NodeArbol node)  
     {  
         if (node != null)  
         {  
-            //System.out.print(node.key+ ":" + node.nombre+ "->");
-            SetIndentificador(node, iden);
-            preOrder(node.left, iden);  
-            preOrder(node.right, iden);  
+            SetIndentificador(node);
+            preOrder(node.left);  
+            preOrder(node.right);  
         }  
     }
     
-    void SetIndentificador(NodeArbol node, int iden){
+    /*recorrido pos order*/
+    void posOrder()  
+    {  
+        posOrder(this.root);
+    }
+    void posOrder(NodeArbol node)  
+    {  
+        if (node != null)  
+        {  
+            posOrder(node.left);  
+            posOrder(node.right);  
+            JOptionPane.showMessageDialog(null, node.lexema,"NANI",JOptionPane.ERROR_MESSAGE);
+        }  
+    }
+    
+    void SetIndentificador(NodeArbol node){
         if (node.right == null && node.left == null)  {
             iden++;
             node.identificador = iden;
+            node.primeros = iden;
+            node.ultimos = iden;
+            node.Anulable = "F";
         }
         
     }
