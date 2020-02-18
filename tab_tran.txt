@@ -1,0 +1,8 @@
+digraph G { rankdir=LR
+node [shape=record];
+node0[label="{{Estado|S0}
+|{ siguientes|[1]}
+|{ terminal|}
+|{Tipo |N}
+}"];
+}

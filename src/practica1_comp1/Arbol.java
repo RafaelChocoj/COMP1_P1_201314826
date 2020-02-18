@@ -8,6 +8,7 @@ package practica1_comp1;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Collections;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,9 @@ import javax.swing.JOptionPane;
 public class Arbol {
     
     LinkedList<Siguientes> tabla_siguientes;
+    
+    LinkedList<TTransiciones> tab_transiciones;
+            
     NodeArbol root;
     public Arbol (NodeArbol root){
         this.root = root;
@@ -173,6 +177,46 @@ public class Arbol {
         return this.graf_arbolavl(graf.toString(),"tab_sig");
     }
     
+    public boolean graficando_tabTransiciones(){
+        StringBuilder graf  = new StringBuilder(); //grafica total
+        
+        StringBuilder esta  = new StringBuilder(); // para nombre hoja
+        StringBuilder sig  = new StringBuilder(); // para indice
+        StringBuilder ter  = new StringBuilder(); // para siguientes
+        StringBuilder tipo  = new StringBuilder(); // para indice
+
+
+        graf.append("digraph G { rankdir=LR\n");
+        graf.append("node [shape=record];\n");
+        graf.append("node0[label=\"{");
+
+        esta.append("{Estado");
+        sig.append("|{ siguientes");
+        ter.append("|{ terminal");
+        tipo.append("|{Tipo ");
+        for (int i = 0; i < tab_transiciones.size() ;i++) {
+            esta.append("|" + tab_transiciones.get(i).name_estado );
+            sig.append("|" + tab_transiciones.get(i).siguientes );
+            ter.append("|" + tab_transiciones.get(i).terminal );
+            tipo.append("|" + tab_transiciones.get(i).tipo_estado );
+        }
+        esta.append("}\n");
+        sig.append("}\n");
+        ter.append("}\n");
+        tipo.append("}\n");
+        
+        graf.append(esta);
+        graf.append(sig);
+        graf.append(ter);
+        graf.append(tipo);
+        
+        graf.append("}\"];\n");
+        graf.append("}");
+
+        //JOptionPane.showMessageDialog(null,graf);
+        return this.graf_arbolavl(graf.toString(),"tab_tran");
+    }
+    
     //////////////////////////////////
     /*recortofpd*/
     int iden;
@@ -306,10 +350,18 @@ public class Arbol {
             /*rigth ultima -: left sguiente*/
             String[] ultimos = node.ultimos.split(",");
             for (int i = 0; i < ultimos.length ;i++) {
-                //JOptionPane.showMessageDialog(null, ultimos[i].trim());     
+                //JOptionPane.showMessageDialog(null, "ultimos: " + ultimos[i].trim());     
                 for (Siguientes tab : tabla_siguientes) {
                     if (tab.id == Integer.parseInt(ultimos[i].trim())){
-                        tab.nexts = tab.nexts + ", " + node.primeros;
+                        //tab.nexts = tab.nexts + ", " + node.primeros;
+                        ////////
+                        String[] primeros = node.primeros.split(",");
+                        for (int pri = 0; pri < primeros.length ;pri++){
+                            //JOptionPane.showMessageDialog(null, "primeros: " + primeros[pri].trim());   
+                            tab.nexts.add(Integer.parseInt(primeros[pri].trim()));
+                        }
+                        /////////
+
                     }
                 }
             }   
@@ -322,7 +374,15 @@ public class Arbol {
                 //JOptionPane.showMessageDialog(null, ultimosC1[i].trim());     
                 for (Siguientes tab : tabla_siguientes) {
                     if (tab.id == Integer.parseInt(ultimosC1[i].trim())){
-                        tab.nexts = tab.nexts + ", " + node.right.primeros;
+                        //tab.nexts = tab.nexts + ", " + node.right.primeros;
+                        
+                        ////////
+                        String[] primeros = node.right.primeros.split(",");
+                        for (int pri = 0; pri < primeros.length ;pri++){
+                            //JOptionPane.showMessageDialog(null, "primeros: " + primeros[pri].trim());   
+                            tab.nexts.add(Integer.parseInt(primeros[pri].trim()));
+                        }
+                        /////////
                     }
                 }
             }
@@ -337,11 +397,147 @@ public class Arbol {
                 //JOptionPane.showMessageDialog(null, ultimos[i].trim());     
                 for (Siguientes tab : tabla_siguientes) {
                     if (tab.id == Integer.parseInt(ultimos[i].trim())){
-                        tab.nexts = tab.nexts + ", " + node.primeros;
+                        //tab.nexts = tab.nexts + ", " + node.primeros;
+                        
+                        ////////
+                        String[] primeros = node.primeros.split(",");
+                        for (int pri = 0; pri < primeros.length ;pri++){
+                            //JOptionPane.showMessageDialog(null, "primeros: " + primeros[pri].trim());   
+                            tab.nexts.add(Integer.parseInt(primeros[pri].trim()));
+                        }
+                        /////////
                     }
                 }
             }   
         }
+    }
+    
+    /*creando tabla de transiciones*/
+    void TabTransiciones(){
+        tab_transiciones = new LinkedList<>();
+        
+        /*estado inicial*/
+        String name_es;
+        String[] inicial = this.root.left.primeros.split(",");
+        //JOptionPane.showMessageDialog(null,"estado inicial: " +  inicial);  
+        LinkedList<Integer> siguientes = new LinkedList<>();
+        for (int i = 0; i < inicial.length ;i++) {
+                //JOptionPane.showMessageDialog(null, inicial[i].trim());   
+                siguientes.add(Integer.parseInt(inicial[i]));
+        }
+//        siguientes.add(4);
+//        siguientes.add(1);
+//        siguientes.add(7);
+//        siguientes.add(10);
+        Collections.sort(siguientes);
+        JOptionPane.showMessageDialog(null,"siguientes: " +  siguientes);  
+        ///////////
+        name_es = "S0";
+        
+//        TTransiciones transi = new TTransiciones(name_es, siguientes, name_es);
+//        tab_transiciones.add(transi);
+        
+        JOptionPane.showMessageDialog(null,"recorriendo estado inicial ");  
+        //LinkedList<Integer> siguientes_1 = new LinkedList<>();
+        for (int i = 0; i < siguientes.size() ;i++) {
+               JOptionPane.showMessageDialog(null, siguientes.get(i)); 
+               Siguientes sig;
+               sig = ObtengoSiguientes_ter(siguientes.get(i));
+               
+               JOptionPane.showMessageDialog(null," id:  " + sig.id + " hoja:  " + sig.hoja + " next:  " + sig.nexts);  
+        }
+        
+        /*armando transciones*/
+        graficando_tabTransiciones();
+    }
+    
+    
+    void Create_TabTransiciones(){
+        tab_transiciones = new LinkedList<>();
+        
+        String[] inicial = this.root.left.primeros.split(",");
+        LinkedList<Integer> siguientes = new LinkedList<>();
+        for (int i = 0; i < inicial.length ;i++) {
+                //JOptionPane.showMessageDialog(null, inicial[i].trim());   
+                siguientes.add(Integer.parseInt(inicial[i]));
+        }
+        Collections.sort(siguientes);
+        JOptionPane.showMessageDialog(null,"siguientes: " +  siguientes); 
+        
+        String name_es = "S" + tab_transiciones.size();
+        TTransiciones transi = new TTransiciones(name_es,siguientes,"","N");
+        tab_transiciones.add(transi);
+        
+        //////////////////////////////////////////////////////////////////
+        /*iniciar a reoorrer los estados mientras hay un simbolo disponibe*/
+        for (int i = 0; i < tab_transiciones.size() ;i++) {
+            JOptionPane.showMessageDialog(null,"actual analisis: " +  tab_transiciones.get(i).name_estado); 
+            if(tab_transiciones.get(i).tipo_estado.equals("N")){
+                
+                /*agrego en lista los terminaes, si hay vas id con el
+                mismo terminal tambien lo agrego*/
+//                JOptionPane.showMessageDialog(null,"tab_transiciones.get(i).siguientes: " +  tab_transiciones.get(i).siguientes); 
+                LinkedList<AnalizarConjunto> new_con;
+                new_con = Con_conjunto_analisis(tab_transiciones.get(i).siguientes);
+                JOptionPane.showMessageDialog(null,"new_con: " +  new_con); 
+            }
+        }
+        
+        graficando_tabTransiciones();
+    }
+    
+    public LinkedList<AnalizarConjunto> Con_conjunto_analisis(LinkedList<Integer> conj){
+    //public void Con_conjunto_analisis(LinkedList<Integer> conj){
+        LinkedList<AnalizarConjunto> conjunto_actul = new LinkedList<>();
+        JOptionPane.showMessageDialog(null,"conj: " +  conj); 
+        for (int i = 0; i < conj.size() ;i++) {
+            //1. obtengo el indice
+            //2. obtengo el terminal
+            String ter = Obtego_terminal_enSig(conj.get(i));
+            JOptionPane.showMessageDialog(null,"ter: " +  ter); 
+            //comparo si existe ya, se agrega en su indice si no solo se agrega
+            int index = Busca_terminal(conjunto_actul, ter);
+            if(index == -1){
+                LinkedList<Integer> new_con = new LinkedList<>();
+                new_con.add(conj.get(i));
+                conjunto_actul.add(new AnalizarConjunto(ter,new_con ) );
+                JOptionPane.showMessageDialog(null,"no existe entonces agrega - " + conj.get(i)); 
+            } else
+            { /// ya existe terminal encontes solo agrego a los demas
+                JOptionPane.showMessageDialog(null,"existe solo add - " + conj.get(i)); 
+                conjunto_actul.get(index).conjunto_s.add(conj.get(i));
+            }
+        }
+        return conjunto_actul;
+    }
+    
+    public int Busca_terminal(LinkedList<AnalizarConjunto> conjunto_actul, String terminal){
+        for (int i = 0; i < conjunto_actul.size() ;i++) {
+            if (terminal.equals(conjunto_actul.get(i).terminal)) {
+                return i;
+            }
+        }
+        return -1; /// no esta dentro del listado
+    }
+    
+    public String Obtego_terminal_enSig(int idter){
+        for (int i = 0; i < tabla_siguientes.size() ;i++) {
+            
+            if (tabla_siguientes.get(i).id == idter) {
+                return tabla_siguientes.get(i).hoja;
+            }
+        }
+        return "";
+    }
+    
+    public Siguientes ObtengoSiguientes_ter(int idter){
+        for (int i = 0; i < tabla_siguientes.size() ;i++) {
+            
+            if (tabla_siguientes.get(i).id == idter) {
+                return tabla_siguientes.get(i);
+            }
+        }
+        return null;
     }
     
     void SetIndentificador(NodeArbol node){
@@ -353,7 +549,8 @@ public class Arbol {
             node.Anulable = "F";
             
             /*insertando en tabla*/
-            Siguientes sig = new Siguientes(node.lexema, iden, "");
+            LinkedList<Integer> nsig = new LinkedList<>();
+            Siguientes sig = new Siguientes(node.lexema, iden, nsig);
             tabla_siguientes.add(sig);
         }
         

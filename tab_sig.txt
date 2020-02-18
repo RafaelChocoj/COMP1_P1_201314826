@@ -1,0 +1,7 @@
+digraph G { rankdir=LR
+node [shape=record];
+node0[label="{{Hoja|a|a|b|b|#}
+|{Hoja ID |1|2|3|4|5}
+|{Siguientes |[2, 3, 4]|[2, 3, 4]|[2, 3, 4]|[5]|[]}
+}"];
+}

@@ -5,6 +5,8 @@
  */
 package practica1_comp1;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author RAFAEL
@@ -12,9 +14,11 @@ package practica1_comp1;
 public class Siguientes {
     String hoja;
     int id;
-    String nexts;
+    //String nexts;
+    LinkedList<Integer> nexts;
     
-    public Siguientes (String hoja,int id, String nexts ){
+    //public Siguientes (String hoja,int id, String nexts ){
+    public Siguientes (String hoja,int id, LinkedList<Integer> nexts ){
         
         this.hoja = hoja;
         this.id = id;
