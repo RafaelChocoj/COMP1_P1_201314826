@@ -73,6 +73,8 @@
                       <Component id="n_analizar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="b_prob_ar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="b_crear_arbol" min="-2" pref="190" max="-2" attributes="0"/>
                   </Group>
                   <Component id="scrolpan" min="-2" pref="774" max="-2" attributes="0"/>
               </Group>
@@ -92,7 +94,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="b_prob_ar" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="b_prob_ar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="b_crear_arbol" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -130,6 +135,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_prob_arActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="b_crear_arbol">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Crear Graficas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_crear_arbolActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

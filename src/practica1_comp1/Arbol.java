@@ -259,12 +259,25 @@ public class Arbol {
             /*suponiendo que el unico nodo que tiene lo 
             tiene a la derecha*/
             node.primeros = node.right.primeros;
-            node.ultimos = node.right.ultimos;
-            
-        }
-        
+            node.ultimos = node.right.ultimos;     
+        }      
         //?
+        else if(node.lexema.equals("?")){
+            node.Anulable = "V";
+            /*suponiendo que el unico nodo que tiene lo 
+            tiene a la derecha*/
+            node.primeros = node.right.primeros;
+            node.ultimos = node.right.ultimos;     
+        }
+        ///falta confirmar si es asi :V
         //+
+        else if(node.lexema.equals("+")){
+            node.Anulable = node.right.Anulable;
+            /*suponiendo que el unico nodo que tiene lo 
+            tiene a la derecha*/          
+            node.primeros = node.right.primeros;
+            node.ultimos = node.right.ultimos;     
+        }
     }
     
     /*recodiendo arbol para los siguientes*/
@@ -316,6 +329,19 @@ public class Arbol {
             
         }
         /*+*/
+        else
+            if(node.lexema.equals("+")){
+            /*rigth ultima -: left sguiente*/
+            String[] ultimos = node.ultimos.split(",");
+            for (int i = 0; i < ultimos.length ;i++) {
+                //JOptionPane.showMessageDialog(null, ultimos[i].trim());     
+                for (Siguientes tab : tabla_siguientes) {
+                    if (tab.id == Integer.parseInt(ultimos[i].trim())){
+                        tab.nexts = tab.nexts + ", " + node.primeros;
+                    }
+                }
+            }   
+        }
     }
     
     void SetIndentificador(NodeArbol node){

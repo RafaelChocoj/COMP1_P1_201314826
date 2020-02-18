@@ -24,6 +24,12 @@ public class VentanaPrin extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPrin
      */
+    
+    /*conjuntos*/
+    LinkedList<Variables> lis_var;
+     /*lista expresiones regulares*/
+    LinkedList<VarExpReg> lis_ex_reg;
+    
     File rutas_ar;
     
     JFileChooser dialog = new JFileChooser();
@@ -47,6 +53,7 @@ public class VentanaPrin extends javax.swing.JFrame {
         jtxtarea1 = new javax.swing.JTextArea();
         n_analizar = new javax.swing.JButton();
         b_prob_ar = new javax.swing.JButton();
+        b_crear_arbol = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         m_abrir = new javax.swing.JMenuItem();
@@ -72,6 +79,13 @@ public class VentanaPrin extends javax.swing.JFrame {
         b_prob_ar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_prob_arActionPerformed(evt);
+            }
+        });
+
+        b_crear_arbol.setText("Crear Graficas");
+        b_crear_arbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_crear_arbolActionPerformed(evt);
             }
         });
 
@@ -118,7 +132,9 @@ public class VentanaPrin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(n_analizar)
                         .addGap(33, 33, 33)
-                        .addComponent(b_prob_ar))
+                        .addComponent(b_prob_ar)
+                        .addGap(27, 27, 27)
+                        .addComponent(b_crear_arbol, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrolpan, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(224, Short.MAX_VALUE))
         );
@@ -133,7 +149,9 @@ public class VentanaPrin extends javax.swing.JFrame {
                         .addComponent(n_analizar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(b_prob_ar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(b_prob_ar)
+                            .addComponent(b_crear_arbol))))
                 .addGap(33, 33, 33))
         );
 
@@ -250,10 +268,11 @@ public class VentanaPrin extends javax.swing.JFrame {
        Sintactico sin = new Sintactico();
        sin.Parsear(analisis_lex.lis_tokens);
        
+       lis_ex_reg = sin.getLista_ExpRegulares();
        JOptionPane.showMessageDialog(null,"termino el sintatico");
-       sin.Imprime_var();
-       
-       sin.Imprime_ER();
+//       sin.Imprime_var();
+//       
+//       sin.Imprime_ER();
        
     }//GEN-LAST:event_n_analizarActionPerformed
 
@@ -350,28 +369,33 @@ public class VentanaPrin extends javax.swing.JFrame {
 //        pref_er.add(new ER_unitario("*", "CA")); ///asterisco
 //        pref_er.add(new ER_unitario("/", "CA"));
 //        pref_er.add(new ER_unitario("+", "O"));
-//        pref_er.add(new ER_unitario("digito", "CO"));
+////        pref_er.add(new ER_unitario("digito", "CO"));
         
    
-////para ejemplo de prac
-pref_er.add(new ER_unitario(".", "O"));
-pref_er.add(new ER_unitario("letra", "CO"));
-pref_er.add(new ER_unitario("*", "O"));
-pref_er.add(new ER_unitario("|", "O"));
-pref_er.add(new ER_unitario("_", "CA"));
-pref_er.add(new ER_unitario("|", "O"));
-pref_er.add(new ER_unitario("letra", "CO"));
-pref_er.add(new ER_unitario("digito", "CO"));
-
-/////para pradtica de los procedimientos
+//////para ejemplo de prac
 //pref_er.add(new ER_unitario(".", "O"));
-//pref_er.add(new ER_unitario(".", "O"));
-//pref_er.add(new ER_unitario("a", "CA"));
+//pref_er.add(new ER_unitario("letra", "CO"));
 //pref_er.add(new ER_unitario("*", "O"));
 //pref_er.add(new ER_unitario("|", "O"));
-//pref_er.add(new ER_unitario("a", "CA"));
-//pref_er.add(new ER_unitario("b", "CA"));
-//pref_er.add(new ER_unitario("b", "CA"));
+//pref_er.add(new ER_unitario("_", "CA"));
+//pref_er.add(new ER_unitario("|", "O"));
+//pref_er.add(new ER_unitario("letra", "CO"));
+//pref_er.add(new ER_unitario("digito", "CO"));
+
+///para pradtica de los procedimientos
+pref_er.add(new ER_unitario(".", "O"));
+pref_er.add(new ER_unitario(".", "O"));
+pref_er.add(new ER_unitario("a", "CA"));
+
+pref_er.add(new ER_unitario("*", "O"));
+//pref_er.add(new ER_unitario("+", "O"));
+
+pref_er.add(new ER_unitario("|", "O"));
+pref_er.add(new ER_unitario("a", "CA"));
+pref_er.add(new ER_unitario("b", "CA"));
+pref_er.add(new ER_unitario("b", "CA"));
+
+
 
 
         
@@ -421,6 +445,24 @@ pref_er.add(new ER_unitario("digito", "CO"));
         
     }//GEN-LAST:event_b_prob_arActionPerformed
 
+    private void b_crear_arbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_crear_arbolActionPerformed
+         //LinkedList<ER_unitario> pref_er = new LinkedList<>();
+         Imprime_ER();
+    }//GEN-LAST:event_b_crear_arbolActionPerformed
+
+    public void Imprime_ER(){
+        /*probando armando el arbol*/
+        
+        for (int i = 0; i < lis_ex_reg.size(); ++i)
+        { 
+            JOptionPane.showMessageDialog(null,  lis_ex_reg.get(i).name_exreg + " - "
+                    +lis_ex_reg.get(i).toString());
+            ///
+        
+        }
+        
+    }
+    
     //////////////////////////////////////inicio graficando arbol
     public boolean Graficando_arbol(){
 
@@ -623,6 +665,7 @@ pref_er.add(new ER_unitario("digito", "CO"));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_crear_arbol;
     private javax.swing.JButton b_prob_ar;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

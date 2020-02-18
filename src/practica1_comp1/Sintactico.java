@@ -314,10 +314,8 @@ public class Sintactico {
     /*haciendo mach a las palabras, si son iguales*/
     public void match(String tipo)
     {
-//        String des_er;
-//        String tag_ac;
-//        String lexe_ac = "";
-       JOptionPane.showMessageDialog(null,"*******Actual= " + tipo + "************ lexema= " + preanalisis.lexema);
+        //imprime el actual
+//////////////////////       JOptionPane.showMessageDialog(null,"*******Actual= " + tipo + "************ lexema= " + preanalisis.lexema);
         if (!tipo.equals(preanalisis.idToken ))
         {
             JOptionPane.showMessageDialog(null,"Error Sintactico se esperaba un caracter TIPO " + tipo + ", lexema: " + preanalisis.lexema );
@@ -336,6 +334,14 @@ public class Sintactico {
             preanalisis = listaTokens.get(numPreanalisis);
         } else {JOptionPane.showMessageDialog(null,"fin token");}
 
+    }
+    /*retorna lista de expresiones */
+    public LinkedList<Variables> getLista_Conjuntos(){
+        return this.lis_var;
+    }
+    
+    public LinkedList<VarExpReg> getLista_ExpRegulares(){
+        return this.lis_ex_reg;
     }
     
     /*imprime variables y sus valores*/
