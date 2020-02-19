@@ -15,6 +15,9 @@ import javax.swing.JTextArea;
 import java.io.*;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -472,10 +475,14 @@ pref_er.add(new ER_unitario("b", "CA"));
         LinkedList<Integer> lis1 = new LinkedList<>();
         lis1.add(1);
         lis1.add(2);
+        lis1.add(3);
         
         LinkedList<Integer> lis2 = new LinkedList<>();
-        lis2.add(2);
+        lis2.add(0);
         lis2.add(1);
+        
+        lis2.add(5);
+        lis2.add(2);
         
         
         Collections.sort(lis1);
@@ -484,13 +491,35 @@ pref_er.add(new ER_unitario("b", "CA"));
         JOptionPane.showMessageDialog(null,"lis1: " +lis1);
         JOptionPane.showMessageDialog(null,"lis2: " +lis2);
         
-        if (lis1.equals(lis2)) {
-            JOptionPane.showMessageDialog(null," las listas son iguales");
-        } else {
-            JOptionPane.showMessageDialog(null," No iguales");
+        for (int i = 0; i < lis2.size(); i++) {
+            
+            if (exite(lis1,lis2.get(i)) == false){
+                lis1.add(lis2.get(i));
+            }
+            
         }
+        Collections.sort(lis1);
+        JOptionPane.showMessageDialog(null,"new lis1: " +lis1);
+//        LinkedList<Integer> junto = new LinkedList<>();
+//        List newList = Stream.concat(lis1.stream(), lis2.stream()) .collect(Collectors.toList());
+//        JOptionPane.showMessageDialog(null,"strem: " +newList );
+       
+       
+//        if (lis1.equals(lis2)) {
+//            JOptionPane.showMessageDialog(null," las listas son iguales");
+//        } else {
+//            JOptionPane.showMessageDialog(null," No iguales");
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public boolean exite(LinkedList<Integer> lis1, int v2){
+        for (int i = 0; i < lis1.size(); i++) {
+            if (lis1.get(i)== v2){
+                return true;
+            }
+        }
+        return false;
+    }
     public void Crea_Three_ER(){
         /*probando armando el arbol*/
         

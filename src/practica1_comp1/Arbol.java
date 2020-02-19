@@ -470,8 +470,10 @@ public class Arbol {
         
         //////////////////////////////////////////////////////////////////
         /*iniciar a reoorrer los estados mientras hay un simbolo disponibe*/
+        
         for (int i = 0; i < tab_transiciones.size() ;i++) {
-            JOptionPane.showMessageDialog(null,"actual analisis: " +  tab_transiciones.get(i).name_estado); 
+            JOptionPane.showMessageDialog(null,"size(): " +  tab_transiciones.size() +" ** " +i); 
+            JOptionPane.showMessageDialog(null,"actual analisis: " +  tab_transiciones.get(i).name_estado ); 
             if(tab_transiciones.get(i).tipo_estado.equals("N")){
                 
                 /*agrego en lista los terminaes, si hay vas id con el
@@ -479,11 +481,97 @@ public class Arbol {
 //                JOptionPane.showMessageDialog(null,"tab_transiciones.get(i).siguientes: " +  tab_transiciones.get(i).siguientes); 
                 LinkedList<AnalizarConjunto> new_con;
                 new_con = Con_conjunto_analisis(tab_transiciones.get(i).siguientes);
-                JOptionPane.showMessageDialog(null,"new_con: " +  new_con); 
+                //JOptionPane.showMessageDialog(null,"new_con: " +  new_con); 
+                
+                /*aqui voy verificando los estados*/
+                //////////////////////////////verificando siguientes
+                for (int j = 0; j < new_con.size(); j++) {
+                    JOptionPane.showMessageDialog(null,new_con.get(j).terminal +" -" + new_con.get(j).conjunto_s ); 
+                    /*agreando insertar a transicion*/
+                    
+                        ///
+//                    if(new_con.get(j).conjunto_s.size()==1){
+//                        
+//                        /*obtengo siguientes*/
+//                        LinkedList<Integer> sige;                 
+//                        sige = Siguientes_terminal(new_con.get(j).conjunto_s.get(0));
+//                        Collections.sort(sige);
+//                        JOptionPane.showMessageDialog(null,"sige: " +  sige); 
+//                        
+//                        /*si existe en transiciones agregar si no no*/
+//                        ///si existe
+//                        JOptionPane.showMessageDialog(null,"existe_Estado(sige): " +  existe_Estado(sige)); 
+//                        if (existe_Estado(sige)) {
+//                        } else // si no existe
+//                        {
+//                            String name_es_tem = "S" + tab_transiciones.size();
+//                            TTransiciones transi_tem = new TTransiciones(name_es_tem,sige,new_con.get(j).terminal,"N");
+//                            tab_transiciones.add(transi_tem);
+//                        }
+//                    } else
+//                    if(new_con.get(j).conjunto_s.size() > 1){
+                    /////
+                        LinkedList<Integer> sige = null;     
+                        for (int un = 0; un < new_con.get(j).conjunto_s.size(); un++){
+                            if(un == 0){
+                                ///la primera lista
+                                sige = Siguientes_terminal(new_con.get(j).conjunto_s.get(un));
+                            } else {
+                                //concatea las uniones
+                                LinkedList<Integer> lis2;
+                                lis2 = Siguientes_terminal(new_con.get(j).conjunto_s.get(un));
+                                for (int junt = 0; junt < lis2.size(); junt++) {
+                                    if (exite(sige,lis2.get(junt)) == false){
+                                        sige.add(lis2.get(junt));
+                                    }
+                                }                     
+                            }
+                        }
+                        
+                        Collections.sort(sige);
+                        JOptionPane.showMessageDialog(null,"sige new lis1: " + sige); 
+                        /*si existe en transiciones agregar si no no*/
+                        ///si existe
+                        JOptionPane.showMessageDialog(null,"existe_Estado(sige): " +  existe_Estado(sige)); 
+                        if (existe_Estado(sige)) {
+                        } else // si no existe
+                        {
+                            String name_es_tem = "S" + tab_transiciones.size();
+                            TTransiciones transi_tem = new TTransiciones(name_es_tem,sige,new_con.get(j).terminal,"N");
+                            tab_transiciones.add(transi_tem);
+                        }
+
+//                    } 
+                }
+                //////////////////////////
+                
             }
         }
         
         graficando_tabTransiciones();
+    }
+    
+    public boolean exite(LinkedList<Integer> lis1, int v2){
+        for (int i = 0; i < lis1.size(); i++) {
+            if (lis1.get(i)== v2){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean existe_Estado(LinkedList<Integer> new_estado){
+        
+        for (int i = 0; i < tab_transiciones.size() ;i++) {
+            if (tab_transiciones.get(i).siguientes.equals(new_estado)) {
+                //JOptionPane.showMessageDialog(null," las listas son iguales");
+                return true;
+            } 
+//            else {
+//                JOptionPane.showMessageDialog(null," No iguales");
+//            }
+        }
+        return false;
     }
     
     public LinkedList<AnalizarConjunto> Con_conjunto_analisis(LinkedList<Integer> conj){
@@ -535,6 +623,16 @@ public class Arbol {
             
             if (tabla_siguientes.get(i).id == idter) {
                 return tabla_siguientes.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public LinkedList<Integer> Siguientes_terminal(int idter){
+        for (int i = 0; i < tabla_siguientes.size() ;i++) {
+            
+            if (tabla_siguientes.get(i).id == idter) {
+                return tabla_siguientes.get(i).nexts;
             }
         }
         return null;
