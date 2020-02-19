@@ -17,11 +17,15 @@ public class TTransiciones {
     String terminal;
     String tipo_estado;
     
-    public TTransiciones (String name_estado,LinkedList<Integer> siguientes,String terminal,String tipo_estado ){
+    LinkedList<tran_a_estados> ir_a;
+    
+    public TTransiciones (String name_estado,LinkedList<Integer> siguientes,String terminal,String tipo_estado, LinkedList<tran_a_estados> ir_a ){
         
         this.name_estado = name_estado;
         this.siguientes = siguientes;
         this.tipo_estado = tipo_estado;
         this.terminal = terminal;
+        
+        this.ir_a = ir_a;
     }
 }

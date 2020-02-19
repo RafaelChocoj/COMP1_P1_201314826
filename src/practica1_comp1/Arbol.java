@@ -177,7 +177,7 @@ public class Arbol {
         return this.graf_arbolavl(graf.toString(),"tab_sig");
     }
     
-    public boolean graficando_tabTransiciones(){
+    public boolean graficando_tabTransiciones_back(){
         StringBuilder graf  = new StringBuilder(); //grafica total
         
         StringBuilder esta  = new StringBuilder(); // para nombre hoja
@@ -217,6 +217,84 @@ public class Arbol {
         return this.graf_arbolavl(graf.toString(),"tab_tran");
     }
     
+    public boolean graficando_tabTransiciones(){
+        StringBuilder graf  = new StringBuilder(); //grafica total
+        
+        StringBuilder esta  = new StringBuilder(); // para nombre hoja
+        StringBuilder sig  = new StringBuilder(); // para indice
+        StringBuilder ter  = new StringBuilder(); // para siguientes
+        StringBuilder tipo  = new StringBuilder(); // para indice
+
+
+        graf.append("digraph G { rankdir=LR\n");
+        graf.append("node [shape=record];\n");
+        graf.append("node0[label=\"{");
+
+        esta.append("{Estado");
+        sig.append("|{ siguientes");
+        ter.append("|{ terminal");
+//        for (int i = 0; i < all_terminales.size() ;i++) {
+//            JOptionPane.showMessageDialog(null, all_terminales.get(i),"NANI",JOptionPane.ERROR_MESSAGE);
+//            ter.append("|{" + all_terminales.get(i) /*+ "}\n"*/ );
+//        }
+        tipo.append("|{Tipo ");
+        for (int i = 0; i < tab_transiciones.size() ;i++) {
+            esta.append("|" + tab_transiciones.get(i).name_estado );
+            sig.append("|" + tab_transiciones.get(i).siguientes );
+//            ter.append("|" + i );
+            /*recorriendo a estados*/
+//            JOptionPane.showMessageDialog(null, i +" * "+ tab_transiciones.get(i).name_estado + " can: " + tab_transiciones.get(i).ir_a.size(),"NANI",JOptionPane.ERROR_MESSAGE);
+                ter.append("|{");
+                for (int j = 0; j < tab_transiciones.get(i).ir_a.size() ;j++){
+                //JOptionPane.showMessageDialog(null,"es: " + tab_transiciones.get(i).name_estado +" - " +tab_transiciones.get(i).ir_a.get(j).terminal,"ah",JOptionPane.ERROR_MESSAGE);
+//                    if (tab_transiciones.get(i).ir_a.get(j).terminal.equals(all_terminales.get(te))){
+                        ////ter.append("|" + tab_transiciones.get(i).name_estado+" * " + tab_transiciones.get(i).ir_a.get(j).terminal +"-" +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
+//                    } else{
+//                        ter.append("| -- "  );
+//                    }
+                    if (j ==0) {
+                        ter.append( /*tab_transiciones.get(i).name_estado+" * " +*/ tab_transiciones.get(i).ir_a.get(j).terminal +" -\\> " +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
+                    } else{
+                        ter.append("|" + /*tab_transiciones.get(i).name_estado+" * " +*/ tab_transiciones.get(i).ir_a.get(j).terminal +" -\\> " +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
+                    }
+                }
+                ter.append("}\n");
+
+//////            for (int te = 0; te < all_terminales.size() ; te++) {
+//////                
+//////                for (int j = 0; j < tab_transiciones.get(i).ir_a.size() ;j++){
+//////                    if (tab_transiciones.get(i).ir_a.get(j).terminal.equals(all_terminales.get(te))){
+//////                        ter.append("|" + tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
+//////                    } else{
+//////                        ter.append("| -- "  );
+//////                    }
+//////                }
+//////            }
+            tipo.append("|" + tab_transiciones.get(i).tipo_estado );
+            
+//            /*recorriendo a estados*/
+//            for (int j = 0; j < tab_transiciones.get(i).ir_a.size() ;j++){
+//                
+//            }
+            
+            
+        }
+        esta.append("}\n");
+        sig.append("}\n");
+        ter.append("}\n");
+        tipo.append("}\n");
+        
+        graf.append(esta);
+        graf.append(sig);
+        graf.append(ter);
+        graf.append(tipo);
+        
+        graf.append("}\"];\n");
+        graf.append("}");
+
+        //JOptionPane.showMessageDialog(null,graf);
+        return this.graf_arbolavl(graf.toString(),"tab_tran");
+    }
     //////////////////////////////////
     /*recortofpd*/
     int iden;
@@ -451,8 +529,28 @@ public class Arbol {
         graficando_tabTransiciones();
     }
     
+    public boolean existe_ter(String ter){
+        for (int i = 0; i < all_terminales.size() ;i++) {
+            if (all_terminales.get(i).equals(ter)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
+    LinkedList<String> all_terminales;
     void Create_TabTransiciones(){
+//        /*guardando todas las terminales*/
+//        all_terminales = new LinkedList<>();
+//        for (int i = 0; i < tabla_siguientes.size() ;i++) {
+//            if(i != tabla_siguientes.size()-1){
+//                if (existe_ter(tabla_siguientes.get(i).hoja)==false){
+//                    all_terminales.add(tabla_siguientes.get(i).hoja);
+//                }
+//            }
+//        }
+//        ///
+      
         tab_transiciones = new LinkedList<>();
         
         String[] inicial = this.root.left.primeros.split(",");
@@ -464,11 +562,13 @@ public class Arbol {
         Collections.sort(siguientes);
         JOptionPane.showMessageDialog(null,"siguientes: " +  siguientes); 
         
+        LinkedList<tran_a_estados> ir_a_estados = new LinkedList<>();
+        
         String name_es = "S" + tab_transiciones.size();
-        TTransiciones transi = new TTransiciones(name_es,siguientes,"","N");
+        TTransiciones transi = new TTransiciones(name_es,siguientes,"","N", ir_a_estados);
         tab_transiciones.add(transi);
         
-        //////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
         /*iniciar a reoorrer los estados mientras hay un simbolo disponibe*/
         
         for (int i = 0; i < tab_transiciones.size() ;i++) {
@@ -484,9 +584,17 @@ public class Arbol {
                 //JOptionPane.showMessageDialog(null,"new_con: " +  new_con); 
                 
                 /*aqui voy verificando los estados*/
-                //////////////////////////////verificando siguientes
+                //////////////////////////////verificando siguientes 
+                
+                /**************************
+                ya solo tomando un terminal, por si hay repetidos, solo toma una
+                */
                 for (int j = 0; j < new_con.size(); j++) {
-                    JOptionPane.showMessageDialog(null,new_con.get(j).terminal +" -" + new_con.get(j).conjunto_s ); 
+                    
+                    /*aqui para que el estado final ya no lo tiem en cuenta*/
+                    if (!new_con.get(j).terminal.equals("#")) {
+                        JOptionPane.showMessageDialog(null,new_con.get(j).terminal +" ---+++--" + new_con.get(j).conjunto_s ); 
+        
                     /*agreando insertar a transicion*/
                     
                         ///
@@ -534,18 +642,41 @@ public class Arbol {
                         ///si existe
                         JOptionPane.showMessageDialog(null,"existe_Estado(sige): " +  existe_Estado(sige)); 
                         if (existe_Estado(sige)) {
+                            ///agrega estado de transicion
+                            
+                            //JOptionPane.showMessageDialog(null,"exite +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"); 
+                            //JOptionPane.showMessageDialog(null, "(" +tab_transiciones.get(i).name_estado+")" + new_con.get(j).terminal +" -> " + name_Estado(sige)); 
+                            
+                            tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige)));
+                            
                         } else // si no existe
                         {
+                            /*verificando si es estado final ya no agrega */
+                            LinkedList<tran_a_estados> ir_a_estados_tem = new LinkedList<>();
                             String name_es_tem = "S" + tab_transiciones.size();
-                            TTransiciones transi_tem = new TTransiciones(name_es_tem,sige,new_con.get(j).terminal,"N");
+                            TTransiciones transi_tem = new TTransiciones(name_es_tem,sige,new_con.get(j).terminal,"N", ir_a_estados_tem);
                             tab_transiciones.add(transi_tem);
+                            
+                            //JOptionPane.showMessageDialog(null,"No existe +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"); 
+                            //JOptionPane.showMessageDialog(null, "(" +tab_transiciones.get(i).name_estado+")" + new_con.get(j).terminal +" -> " + name_Estado(sige)); 
+                            
+                            tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige)));
+                            
+                            
+                           
                         }
 
 //                    } 
+                } /// fin no es estado final
                 }
                 //////////////////////////
                 
             }
+            
+            
+            
+//            graficando_tabTransiciones();
+//            JOptionPane.showMessageDialog(null,"finaliza una iteracion");
         }
         
         graficando_tabTransiciones();
@@ -572,6 +703,16 @@ public class Arbol {
 //            }
         }
         return false;
+    }
+    
+    public String name_Estado(LinkedList<Integer> new_estado){
+        
+        for (int i = 0; i < tab_transiciones.size() ;i++) {
+            if (tab_transiciones.get(i).siguientes.equals(new_estado)) {
+                return tab_transiciones.get(i).name_estado;
+            } 
+        }
+        return null;
     }
     
     public LinkedList<AnalizarConjunto> Con_conjunto_analisis(LinkedList<Integer> conj){
