@@ -2,9 +2,9 @@ digraph G {
 rankdir=TB;
 graph [nodesep=0.5 ];
 node [shape = record, fillcolor=seashell2];
-"nodo+1":C1 -> "nodoNo =2"
+"nodo+1":C1 -> "nododigito2"
 "nodo+1" [ label ="<C0>1| F\n+\n|<C1>1"]; 
-"nodoNo =2" [ label ="<C0>1| F\nNo =\niden: 1\n|<C1>1"]; 
+"nododigito2" [ label ="<C0>1| F\ndigito\niden: 1\n|<C1>1"]; 
 "nodo.0":C1 -> "nodo+3"
 "nodo.0":C0 -> "nodo+1"
 "nodo.0" [ label ="<C0>1| F\n.\n|<C1>6"]; 

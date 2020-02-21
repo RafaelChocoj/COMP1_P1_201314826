@@ -22,6 +22,8 @@ public class Arbol {
     
     LinkedList<TTransiciones> tab_transiciones;
             
+   LinkedList<Variables> lis_conjuntos;
+   
     NodeArbol root;
     public Arbol (NodeArbol root){
         this.root = root;
@@ -1008,15 +1010,16 @@ public class Arbol {
     }
     
 //Eva_Lexema_Estado(entrada, cad_actual, estado_interno, i);
-  public void Eva_Lexema_Estado(String entrada, String cad_actual, int estado_interno, int ind ){
+  int indice_continuar;
+  public boolean Eva_Lexema_Estado(String entrada, String cad_actual, int estado_interno, int ind ){
 //        TTransiciones transcion;
-        int idEstado = 0;
+////////////        int idEstado = 0;
         String lexema = "";
 ////////////        int estado_interno = 0;
 //        transcion = tab_transiciones.get(idEstado);
         char c;
-        entrada = entrada + " ";          
-        JOptionPane.showMessageDialog(null, "22#"+entrada +"#");
+////////////        entrada = entrada + " ";          
+//////////        JOptionPane.showMessageDialog(null, "22#"+entrada +"#");
         /*
 Estados
 0 = inicial
@@ -1031,41 +1034,39 @@ Estados
         String Ir_a_estado_si_exito = "";
         
         //for (int i = 0; i < entrada.length() ; i++){
+        //ind--;
         for (int i = ind; i < entrada.length() ; i++){
             //
             c = entrada.charAt(i); 
-            JOptionPane.showMessageDialog(null, "estado_interno: "+estado_interno + " char: "+c);
+            JOptionPane.showMessageDialog(null, "2e"+estado_interno + " cccccccccccccccc: "+c);
             /*inicializamos con el estado inicial*/
             switch (estado_interno)
-            {
-//                /*estado inicial*/
-//                case 0:                   
-////                    for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
-////
-////                        String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
-////                        
-////                        if (tipo.equals("CO")) {
-////                            JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
-////                            estado_interno = 1;
-////                            //i_cad_actual = 0;
-////                            i--;
-////                        }
-////                        else if (tipo.equals("CA"))
-////                        {
-////                            cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
-////                            Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
-////                            estado_interno = 2;
-////                            i_cad_actual = 0;
-////                            i--;
-////                            JOptionPane.showMessageDialog(null, "CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
-//////                            Eva_Cadena(tab_transiciones.get(idEstado).ir_a.get(j).terminal);
-////                        }
-////                    }                
-//
-//                break;
-                
+            {                   
                 /*para armar conjuntos*/
                 case 1:
+                    /*buscando si existe conjunto*/
+                    Variables conjunto = existeCon(cad_actual);
+                    if (conjunto == null) {
+////////////////////                        JOptionPane.showMessageDialog(null, "no existe conjunto - " +c);
+                        return false;
+                    }
+                    
+                    /*verificando tipo de conjunto*/
+                    if (conjunto.tipo.equals("C")) {
+                        boolean existe = existe_valor_enConjunto(String.valueOf(c),conjunto.valores);
+                        
+                        if (existe) {
+                            estado_interno = 0;
+                            cad_actual = "";
+                            lexema = "";
+                            indice_continuar = i;
+                            return true;
+                        } else {
+////////////                            JOptionPane.showMessageDialog(null, "No existe valor "+ c + " en Conjunto " + cad_actual);
+                            return false;
+                        }
+                        
+                    }
                     
                 break; 
                 /*para armar la cadena*/
@@ -1074,13 +1075,14 @@ Estados
                     i_cad_actual++;
                     if (i_cad_actual >  cad_actual.length()) {
                         estado_interno = -99;
+                        return false;
                     }
                     String conca_cad = cad_actual.substring(0, i_cad_actual);
                     //JOptionPane.showMessageDialog(null, "+++cad_actual: "+ cad_actual + " creando cad: " + conca_cad + " - lex: "+ lexema);                  
-                    JOptionPane.showMessageDialog(null, " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+//////////////                   JOptionPane.showMessageDialog(null, " creando cad: " + conca_cad + " - lex: "+ lexema);                  
                                        
                     if (conca_cad.equals(lexema)) {
-                        JOptionPane.showMessageDialog(null, "pasa"); 
+                        //JOptionPane.showMessageDialog(null, "pasa"); 
                         if (i_cad_actual ==  cad_actual.length()) {
                             
                             //acepta estado
@@ -1088,34 +1090,56 @@ Estados
                             cad_actual = "";
                             lexema = "";
                             //i--;
-                            idEstado = getIndexEstado(Ir_a_estado_si_exito);
-                            
-                            JOptionPane.showMessageDialog(null, "Cadena aceptada - " + idEstado); 
+                            //idEstado = getIndexEstado(Ir_a_estado_si_exito);
+                            indice_continuar = i;
+                            //JOptionPane.showMessageDialog(null, "Cadena aceptada"); 
+                            return true;
                         } 
                     } else {
                         estado_interno = -99;
-                        JOptionPane.showMessageDialog(null, "se enconetro error, no pasa lexema"); 
+                        ////JOptionPane.showMessageDialog(null, "se enconetro error, no pasa lexema");
+                        return false;
                     }
                     
                         break;
-                case -99:
-                    i = entrada.length();
-                    JOptionPane.showMessageDialog(null, "No paso Prueba de Lexema"); 
-                break;                   
+//                case -99:
+//                    i = entrada.length();
+//                    JOptionPane.showMessageDialog(null, "No paso Prueba de Lexema"); 
+//                break;                   
             }
         }
+        return false;
     }
+   
+  public boolean existe_valor_enConjunto(String val, LinkedList<String> valores){
+      for (int i = 0; i < valores.size() ; i++){
+          if (val.equals(valores.get(i))) {
+              return true;
+          }
+      }
+      return false;
+  }
+  public Variables existeCon(String name_con){
       
-  public void EvaluandoLexema_final(String entrada){
+      for (int i = 0; i < lis_conjuntos.size() ; i++){
+          if (name_con.equals(lis_conjuntos.get(i).name_var)) {
+              return lis_conjuntos.get(i);
+          }
+      }
+      return null;
+  }
+  public void EvaluandoLexema_final(String entrada, LinkedList<Variables> lis_con){
+      /*asignado valor a lista de conjuntos*/
+      lis_conjuntos = lis_con;
         TTransiciones transcion;
         int idEstado = 0;
         String lexema = "";
         int estado_interno = 0;
         transcion = tab_transiciones.get(idEstado);
         char c;
-        entrada = entrada + " ";
+////////        entrada = entrada + " ";
                  
-        JOptionPane.showMessageDialog(null, "11 #"+entrada +"#");
+        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
         
         /*
         Estados
@@ -1124,40 +1148,91 @@ Estados
         2 = cadena
 
         -99 = estado error
-
         */
+        boolean Acepta_lexema = false;
         String cad_actual ="";
         int i_cad_actual = 0;
         String Ir_a_estado_si_exito = "";
         for (int i = 0; i < entrada.length() ; i++){
             //
             c = entrada.charAt(i); 
-            JOptionPane.showMessageDialog(null, i+ ") *estado_interno: "+estado_interno + " char: "+c);
+////////            JOptionPane.showMessageDialog(null, i+ ")) *interno: "+estado_interno + " c: "+c);
             /*inicializamos con el estado inicial*/
             
+                    boolean pasa = false;
                     for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
-
+//JOptionPane.showMessageDialog(null," ccccccccccccc: "+c);
                         String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
                         
                         if (tipo.equals("CO")) {
-                            JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
+                            Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
                             estado_interno = 1;
                             //i_cad_actual = 0;
-                            i--;
+                            //i--;
+//////////////                            JOptionPane.showMessageDialog(null,"1 S: " + tab_transiciones.get(idEstado).name_estado + " CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            
+                            pasa = Eva_Lexema_Estado(entrada, cad_actual, estado_interno, i);
+                            if (pasa) {
+                                i = indice_continuar+1;
+                                j = -1;
+                                idEstado = getIndexEstado(Ir_a_estado_si_exito);
+                                JOptionPane.showMessageDialog(null, "CO pasa: "+ pasa+ " Ir_a_estado_si_exito: " + Ir_a_estado_si_exito);
+                            }
+                            String Aceptacion = tab_transiciones.get(idEstado).terminal;
+                            if (Aceptacion.equals("F") ) {
+                                Acepta_lexema = true;
+                            } else {
+                                Acepta_lexema = false;
+                            }
+         
+////////////                            JOptionPane.showMessageDialog(null,"1 vf Aceptacion: "+ Aceptacion + " idEstado = " + idEstado);
+                        
                         }
                         else if (tipo.equals("CA"))
                         {
                             cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
                             Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
                             estado_interno = 2;
-                            i_cad_actual = 0;
-                            i--;
-                            JOptionPane.showMessageDialog(null, "CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
-                            Eva_Lexema_Estado(entrada, cad_actual, estado_interno, i);
+                            //i_cad_actual = 0;
+                            //i--;
+////////////////////                            JOptionPane.showMessageDialog(null,"2 S: " + tab_transiciones.get(idEstado).name_estado +  " CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            pasa = Eva_Lexema_Estado(entrada, cad_actual, estado_interno, i);
+                            if (pasa) {
+                                i = indice_continuar+1;
+                                j = -1;
+                                idEstado = getIndexEstado(Ir_a_estado_si_exito); 
+                                JOptionPane.showMessageDialog(null, "CA pasa: "+ pasa+ " Ir_a_estado_si_exito: " + Ir_a_estado_si_exito);
+                            }
+                            String Aceptacion = tab_transiciones.get(idEstado).terminal;
+                            if (Aceptacion.equals("F") ) {
+                                Acepta_lexema = true;
+                            } else {
+                                Acepta_lexema = false;
+                            }
+                            
+                       
+////////                            JOptionPane.showMessageDialog(null,"1 vf Aceptacion: "+ Aceptacion + " idEstado = " + idEstado);
+                                  
                         }
-                    }
-            
+                    }  
+//            if (Acepta_lexema){
+//                //JOptionPane.showMessageDialog(null, "*************LEXEMA CORRECTO ");
+//            } else {
+                JOptionPane.showMessageDialog(null, " pasa: "+ pasa);
+                if (pasa==false) {
+                    Acepta_lexema = false;
+                    i = entrada.length();
+                    //JOptionPane.showMessageDialog(null, "*************************termino, No ");
+                }
+//            }
         }
+        
+        if (Acepta_lexema){
+                JOptionPane.showMessageDialog(null, "*************LEXEMA CORRECTO ");
+            } else {
+                    JOptionPane.showMessageDialog(null, "*************************termino, No ");
+            }
     }
   
     public void EvaluandoLexema_f(String entrada){
