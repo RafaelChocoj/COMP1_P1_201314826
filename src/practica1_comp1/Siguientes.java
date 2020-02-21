@@ -16,12 +16,16 @@ public class Siguientes {
     int id;
     //String nexts;
     LinkedList<Integer> nexts;
+    String Tipo_hoja;
     
-    //public Siguientes (String hoja,int id, String nexts ){
-    public Siguientes (String hoja,int id, LinkedList<Integer> nexts ){
+    ////public Siguientes (String hoja,int id, String nexts ){
+    //public Siguientes (String hoja,int id, LinkedList<Integer> nexts ){
+    public Siguientes (String hoja,int id, LinkedList<Integer> nexts, String Tipo_hoja ){
         
         this.hoja = hoja;
         this.id = id;
         this.nexts = nexts;
+        
+        this.Tipo_hoja = Tipo_hoja;
     }
 }

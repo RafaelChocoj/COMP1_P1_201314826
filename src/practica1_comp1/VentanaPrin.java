@@ -33,6 +33,8 @@ public class VentanaPrin extends javax.swing.JFrame {
     LinkedList<Variables> lis_var;
      /*lista expresiones regulares*/
     LinkedList<VarExpReg> lis_ex_reg;
+    /*para evaluar las expresiones regulares*/
+    LinkedList<Exp_a_Evaluar> lis_evaluar_expre;
     
     File rutas_ar;
     
@@ -156,23 +158,18 @@ public class VentanaPrin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(scrolpan, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addComponent(scrolpan, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(n_analizar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(b_prob_ar)
-                                    .addComponent(b_crear_arbol))))
-                        .addGap(33, 33, 33))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(b_prob_ar)
+                            .addComponent(b_crear_arbol)
+                            .addComponent(n_analizar)))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addContainerGap())))
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
 
         pack();
@@ -289,6 +286,14 @@ public class VentanaPrin extends javax.swing.JFrame {
        sin.Parsear(analisis_lex.lis_tokens);
        
        lis_ex_reg = sin.getLista_ExpRegulares();
+       
+       lis_evaluar_expre = sin.getLista_Evaluar();
+       
+//       for (int i = 0; i < lis_evaluar_expre.size(); ++i)
+//        { 
+//            JOptionPane.showMessageDialog(null,lis_evaluar_expre.get(i).identificador + " - "  + lis_evaluar_expre.get(i).cadena_eva);
+//        }
+ 
        JOptionPane.showMessageDialog(null,"termino el sintatico");
 //       sin.Imprime_var();
 //       
@@ -556,6 +561,8 @@ pref_er.add(new ER_unitario("b", "CA"));
             
             
             tree.graficando_Automata();
+            
+            tree.EvaluandoLexema_f(lis_evaluar_expre.get(0).cadena_eva);
         
         }
         

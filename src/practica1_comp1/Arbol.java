@@ -90,6 +90,7 @@ public class Arbol {
                 graf.append("iden: "+ root_ac.identificador+ "\\n");
             }
             
+//////////////            graf.append("-tipo: "+ root_ac.tipo+ "\\n");
             
             //graf.append("Propietario: "+ root_ac.user+ "\\n" );
             //String conte = root_ac.contenido.replace("\"", "\\\"");
@@ -154,15 +155,22 @@ public class Arbol {
         StringBuilder hoja  = new StringBuilder(); // para nombre hoja
         StringBuilder index  = new StringBuilder(); // para indice
         StringBuilder sig  = new StringBuilder(); // para siguientes
+        
+        StringBuilder tip  = new StringBuilder(); // para tipo de hoja
 
 
         graf.append("digraph G { rankdir=LR\n");
         graf.append("node [shape=record];\n");
         graf.append("node0[label=\"{");
 
-        hoja.append("{Hoja");
+        tip.append("{Tipo "); ///
+        hoja.append("|{Hoja"); ///
+        
+        //hoja.append("{Hoja");
         index.append("|{Hoja ID ");
         sig.append("|{Siguientes ");
+        
+        //tip.append("|{Tipo "); ///
         for (int i = 0; i < tabla_siguientes.size() ;i++) {
             
 //            if (tabla_siguientes.get(i).hoja.equals("|") || 
@@ -171,6 +179,7 @@ public class Arbol {
 //            } else {
 //                hoja.append("|" + tabla_siguientes.get(i).hoja);
 //            }
+            tip.append("|" + tabla_siguientes.get(i).Tipo_hoja );  //
             
             String lex = tabla_siguientes.get(i).hoja;
             lex = lex.replace("|", "\\|");
@@ -178,14 +187,25 @@ public class Arbol {
             hoja.append("|" +lex );
             index.append("|" + tabla_siguientes.get(i).id );
             sig.append("|" + tabla_siguientes.get(i).nexts );
+            
+            
         }
+        
+        tip.append("}\n"); //
+        
         hoja.append("}\n");
         index.append("}\n");
         sig.append("}\n");
         
+        
+        
+        graf.append(tip); //
+        
         graf.append(hoja);
         graf.append(index);
         graf.append(sig);
+        
+        
         
         graf.append("}\"];\n");
         graf.append("}");
@@ -276,7 +296,7 @@ public class Arbol {
 //                        ter.append("| -- "  );
 //                    }
 
-                     String lex =  tab_transiciones.get(i).ir_a.get(j).terminal;
+                    String lex =  tab_transiciones.get(i).ir_a.get(j).terminal;
                     lex = lex.replace("|", "\\|");
                     lex = lex.replace(">", "\\>");
                     
@@ -284,8 +304,10 @@ public class Arbol {
                     
                     if (j ==0) {
                         ter.append(lex +" -\\> " +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
+                        //ter.append(tab_transiciones.get(i).ir_a.get(j).Tipo_ter+")" + lex +" -\\> " +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
                     } else{
                         ter.append("|" + lex +" -\\> " +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
+                        //ter.append("|"+ tab_transiciones.get(i).ir_a.get(j).Tipo_ter+")" + lex +" -\\> " +tab_transiciones.get(i).ir_a.get(j).Ir_a_Estado );
                     }
                 }
                 ter.append("}\n");
@@ -586,7 +608,7 @@ public class Arbol {
 //        TTransiciones transi = new TTransiciones(name_es, siguientes, name_es);
 //        tab_transiciones.add(transi);
         
-        JOptionPane.showMessageDialog(null,"recorriendo estado inicial ");  
+        /////////////////////////////////////////JOptionPane.showMessageDialog(null,"recorriendo estado inicial ");  
         //LinkedList<Integer> siguientes_1 = new LinkedList<>();
         for (int i = 0; i < siguientes.size() ;i++) {
                JOptionPane.showMessageDialog(null, siguientes.get(i)); 
@@ -649,8 +671,8 @@ public class Arbol {
         /*iniciar a reoorrer los estados mientras hay un simbolo disponibe*/
         
         for (int i = 0; i < tab_transiciones.size() ;i++) {
-            JOptionPane.showMessageDialog(null,"size(): " +  tab_transiciones.size() +" ** " +i); 
-            JOptionPane.showMessageDialog(null,"actual analisis: " +  tab_transiciones.get(i).name_estado ); 
+////////////////            JOptionPane.showMessageDialog(null,"size(): " +  tab_transiciones.size() +" ** " +i); 
+////////////////            JOptionPane.showMessageDialog(null,"actual analisis: " +  tab_transiciones.get(i).name_estado ); 
             if(tab_transiciones.get(i).tipo_estado.equals("N")){
                 
                 /*agrego en lista los terminaes, si hay vas id con el
@@ -670,7 +692,7 @@ public class Arbol {
                     
                     /*aqui para que el estado final ya no lo tiem en cuenta*/
                     if (!new_con.get(j).terminal.equals("#")) {
-                        JOptionPane.showMessageDialog(null,new_con.get(j).terminal +" ---+++--" + new_con.get(j).conjunto_s ); 
+////////////////////                        JOptionPane.showMessageDialog(null,new_con.get(j).terminal +" ---+++--" + new_con.get(j).conjunto_s ); 
         
                     /*agreando insertar a transicion*/
                     
@@ -714,18 +736,18 @@ public class Arbol {
                         }
                         
                         Collections.sort(sige);
-                        JOptionPane.showMessageDialog(null,"sige new lis1: " + sige); 
+////////////////////                        JOptionPane.showMessageDialog(null,"sige new lis1: " + sige); 
                         /*si existe en transiciones agregar si no no*/
                         ///si existe
-                        JOptionPane.showMessageDialog(null,"existe_Estado(sige): " +  existe_Estado(sige)); 
+////////////////////                        JOptionPane.showMessageDialog(null,"existe_Estado(sige): " +  existe_Estado(sige)); 
                         if (existe_Estado(sige)) {
                             ///agrega estado de transicion
                             
                             //JOptionPane.showMessageDialog(null,"exite +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"); 
                             //JOptionPane.showMessageDialog(null, "(" +tab_transiciones.get(i).name_estado+")" + new_con.get(j).terminal +" -> " + name_Estado(sige)); 
                             
-                            tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige)));
-                            
+                            //tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige)));
+                            tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige), new_con.get(j).tipo_terminal ));
                         } else // si no existe
                         {
                             /*verificando si es estado final ya no agrega */
@@ -741,7 +763,7 @@ public class Arbol {
                             //JOptionPane.showMessageDialog(null,"No existe +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"); 
                             //JOptionPane.showMessageDialog(null, "(" +tab_transiciones.get(i).name_estado+")" + new_con.get(j).terminal +" -> " + name_Estado(sige)); 
                             
-                            tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige)));
+                            tab_transiciones.get(i).ir_a.add(new tran_a_estados(new_con.get(j).terminal, name_Estado(sige), new_con.get(j).tipo_terminal));
                             
                             
                            
@@ -821,17 +843,21 @@ public class Arbol {
             //1. obtengo el indice
             //2. obtengo el terminal
             String ter = Obtego_terminal_enSig(conj.get(i));
+            String tipo_ter = Obtego_terminal_enSig_Tipo(conj.get(i)); // new tipo
 ////////////////            JOptionPane.showMessageDialog(null,"ter: " +  ter); 
             //comparo si existe ya, se agrega en su indice si no solo se agrega
             int index = Busca_terminal(conjunto_actul, ter);
             if(index == -1){
                 LinkedList<Integer> new_con = new LinkedList<>();
                 new_con.add(conj.get(i));
-                conjunto_actul.add(new AnalizarConjunto(ter,new_con ) );
-                JOptionPane.showMessageDialog(null,"no existe entonces agrega - " + conj.get(i)); 
+                //conjunto_actul.add(new AnalizarConjunto(ter,new_con ) );
+                conjunto_actul.add(new AnalizarConjunto(ter,new_con, tipo_ter) ); //
+                ///agrega a conjunto no existe entonces agrega
+//////////////////////////                JOptionPane.showMessageDialog(null,"no existe entonces agrega - " + conj.get(i)); 
             } else
             { /// ya existe terminal encontes solo agrego a los demas
-                JOptionPane.showMessageDialog(null,"existe solo add - " + conj.get(i)); 
+                 ///agrega a conjunto existe solo add
+//////////////////                JOptionPane.showMessageDialog(null,"existe solo add - " + conj.get(i)); 
                 conjunto_actul.get(index).conjunto_s.add(conj.get(i));
             }
         }
@@ -847,11 +873,23 @@ public class Arbol {
         return -1; /// no esta dentro del listado
     }
     
+    /*para obtener el lexama del terminar*/
     public String Obtego_terminal_enSig(int idter){
         for (int i = 0; i < tabla_siguientes.size() ;i++) {
             
             if (tabla_siguientes.get(i).id == idter) {
                 return tabla_siguientes.get(i).hoja;
+            }
+        }
+        return "";
+    }
+    
+    /*para obtener el tipo de lexema*/
+    public String Obtego_terminal_enSig_Tipo(int idter){
+        for (int i = 0; i < tabla_siguientes.size() ;i++) {
+            
+            if (tabla_siguientes.get(i).id == idter) {
+                return tabla_siguientes.get(i).Tipo_hoja;
             }
         }
         return "";
@@ -887,7 +925,8 @@ public class Arbol {
             
             /*insertando en tabla*/
             LinkedList<Integer> nsig = new LinkedList<>();
-            Siguientes sig = new Siguientes(node.lexema, iden, nsig);
+            //Siguientes sig = new Siguientes(node.lexema, iden, nsig);
+            Siguientes sig = new Siguientes(node.lexema, iden, nsig, node.tipo);
             tabla_siguientes.add(sig);
         }
         
@@ -895,12 +934,138 @@ public class Arbol {
     
     ////////////////////////inicio evaliando lexemas
     public void EvaluandoLexema(String entrada){
-        
+        TTransiciones transcion;
+        int idEstado = 0;
+        String lexema = "";
+        int estado_interno = 0;
+        transcion = tab_transiciones.get(idEstado);
+        char c;
         entrada = entrada + " ";
             
         JOptionPane.showMessageDialog(null, "#"+entrada +"#");
         for (int i = 0; i < entrada.length() ; i++){
             //
+            c = entrada.charAt(i); 
+            //JOptionPane.showMessageDialog(null, c);
+            /*inicializamos con el estado inicial*/
+            switch (estado_interno)
+            {
+                case 0:
+                    
+                    /*para numero*/
+                    if (Character.isDigit(c))
+                    {
+                        estado_interno = 2;
+                        lexema += c;
+                    }
+                    /*para cadena*/
+                    else if (Character.isDigit(c))
+                    {
+                        estado_interno = 1;
+                        lexema += c;
+                    }
+                break;
+                /*para numero*/
+                case 2:
+                        if (Character.isDigit(c))
+                        {
+                            lexema += c;
+                            estado_interno = 2;
+                        }
+
+                        else
+                        {
+
+////                            addToken(lexema, "Digito", fila, columna - lexema.length());
+                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
+                            lexema = "";
+                            i--;
+                            estado_interno = 0;
+                        }
+                        break;
+                        
+            }
+            
+            
+        }
+    }
+    /////
+    public void EvaluandoLexema_f(String entrada){
+        TTransiciones transcion;
+        int idEstado = 0;
+        String lexema = "";
+        int estado_interno = 0;
+        transcion = tab_transiciones.get(idEstado);
+        char c;
+        entrada = entrada + " ";
+        
+            
+        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
+        
+//        for (int i = 0; i < tab_transiciones.get(idEstado).ir_a.size() ; i++){
+//            JOptionPane.showMessageDialog(null, tab_transiciones.get(idEstado).ir_a.get(i).terminal );
+//        }
+        
+        for (int i = 0; i < entrada.length() ; i++){
+            //
+            c = entrada.charAt(i); 
+            
+            for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
+                
+                String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
+                JOptionPane.showMessageDialog(null, c);
+//                JOptionPane.showMessageDialog(null, "ter: " + tab_transiciones.get(idEstado).ir_a.get(j).terminal
+//                        + tipo);
+                
+                if (tipo.equals("CO")) {
+                    JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                }
+                else if (tipo.equals("CA"))
+                {
+                    
+                }
+            }
+            
+            /*inicializamos con el estado inicial*/
+//            switch (estado_interno)
+//            {
+//                case 0:
+//                    
+//                    /*para numero*/
+//                    if (Character.isDigit(c))
+//                    {
+//                        estado_interno = 2;
+//                        lexema += c;
+//                    }
+//                    /*para cadena*/
+//                    else if (Character.isDigit(c))
+//                    {
+//                        estado_interno = 1;
+//                        lexema += c;
+//                    }
+//                break;
+//                /*para numero*/
+//                case 2:
+//                        if (Character.isDigit(c))
+//                        {
+//                            lexema += c;
+//                            estado_interno = 2;
+//                        }
+//
+//                        else
+//                        {
+//
+//////                            addToken(lexema, "Digito", fila, columna - lexema.length());
+//                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
+//                            lexema = "";
+//                            i--;
+//                            estado_interno = 0;
+//                        }
+//                        break;
+//                        
+//            }
+            
+            
         }
     }
 }

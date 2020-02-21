@@ -14,10 +14,14 @@ import java.util.LinkedList;
 public class AnalizarConjunto {
     String terminal;
     LinkedList<Integer> conjunto_s;
+    String tipo_terminal;
     
-    public AnalizarConjunto (String terminal,LinkedList<Integer> conjunto_s ){
+    //public AnalizarConjunto (String terminal,LinkedList<Integer> conjunto_s ){
+    public AnalizarConjunto (String terminal,LinkedList<Integer> conjunto_s, String tipo_terminal ){
         
         this.terminal = terminal;
         this.conjunto_s = conjunto_s;
+        
+        this.tipo_terminal = tipo_terminal;
     }
 }

@@ -26,8 +26,8 @@ public class NodeArbol {
     int height;
 
     
-    public NodeArbol (String lexema,int id, String Anulable, int identificador, String primeros,String ultimos /*, String tipo;*/ ){
-        
+    //public NodeArbol (String lexema,int id, String Anulable, int identificador, String primeros,String ultimos /*, String tipo;*/ ){
+    public NodeArbol (String lexema,int id, String Anulable, int identificador, String primeros,String ultimos, String tipo ){    
         this.id = id;
         this.lexema = lexema;
         this.left = null;
