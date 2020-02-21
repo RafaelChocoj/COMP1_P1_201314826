@@ -932,101 +932,22 @@ public class Arbol {
         
     }
     
-    ////////////////////////inicio evaliando lexemas
-    public void EvaluandoLexema(String entrada){
-        TTransiciones transcion;
-        int idEstado = 0;
-        String lexema = "";
-        int estado_interno = 0;
-        transcion = tab_transiciones.get(idEstado);
-        char c;
-        entrada = entrada + " ";
-            
-        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
-        for (int i = 0; i < entrada.length() ; i++){
-            //
-            c = entrada.charAt(i); 
-            //JOptionPane.showMessageDialog(null, c);
-            /*inicializamos con el estado inicial*/
-            switch (estado_interno)
-            {
-                case 0:
-                    
-                    /*para numero*/
-                    if (Character.isDigit(c))
-                    {
-                        estado_interno = 2;
-                        lexema += c;
-                    }
-                    /*para cadena*/
-                    else if (Character.isDigit(c))
-                    {
-                        estado_interno = 1;
-                        lexema += c;
-                    }
-                break;
-                /*para numero*/
-                case 2:
-                        if (Character.isDigit(c))
-                        {
-                            lexema += c;
-                            estado_interno = 2;
-                        }
-
-                        else
-                        {
-
-////                            addToken(lexema, "Digito", fila, columna - lexema.length());
-                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
-                            lexema = "";
-                            i--;
-                            estado_interno = 0;
-                        }
-                        break;
-                        
-            }
-            
-            
-        }
-    }
-    /////
-    public void EvaluandoLexema_f(String entrada){
-        TTransiciones transcion;
-        int idEstado = 0;
-        String lexema = "";
-        int estado_interno = 0;
-        transcion = tab_transiciones.get(idEstado);
-        char c;
-        entrada = entrada + " ";
-        
-            
-        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
-        
-//        for (int i = 0; i < tab_transiciones.get(idEstado).ir_a.size() ; i++){
-//            JOptionPane.showMessageDialog(null, tab_transiciones.get(idEstado).ir_a.get(i).terminal );
-//        }
-        
-        for (int i = 0; i < entrada.length() ; i++){
-            //
-            c = entrada.charAt(i); 
-            
-            for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
-                
-                String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
-                JOptionPane.showMessageDialog(null, c);
-//                JOptionPane.showMessageDialog(null, "ter: " + tab_transiciones.get(idEstado).ir_a.get(j).terminal
-//                        + tipo);
-                
-                if (tipo.equals("CO")) {
-                    JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
-                }
-                else if (tipo.equals("CA"))
-                {
-                    
-                }
-            }
-            
-            /*inicializamos con el estado inicial*/
+//    ////////////////////////inicio evaliando lexemas
+//    public void EvaluandoLexema(String entrada){
+//        TTransiciones transcion;
+//        int idEstado = 0;
+//        String lexema = "";
+//        int estado_interno = 0;
+//        transcion = tab_transiciones.get(idEstado);
+//        char c;
+//        entrada = entrada + " ";
+//            
+//        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
+//        for (int i = 0; i < entrada.length() ; i++){
+//            //
+//            c = entrada.charAt(i); 
+//            //JOptionPane.showMessageDialog(null, c);
+//            /*inicializamos con el estado inicial*/
 //            switch (estado_interno)
 //            {
 //                case 0:
@@ -1064,6 +985,480 @@ public class Arbol {
 //                        break;
 //                        
 //            }
+//            
+//            
+//        }
+//    }
+    /////
+//    public void Eva_Conjuntos(){
+//        
+//    }
+//    
+//    public void Eva_Cadena(String lexema){
+//        
+//    }
+    
+    public int getIndexEstado(String estado){
+        for (int i = 0; i < tab_transiciones.size() ; i++){
+            if (tab_transiciones.get(i).name_estado.equals(estado)){
+                return i;
+            }
+        }
+        return -99;
+    }
+    
+//Eva_Lexema_Estado(entrada, cad_actual, estado_interno, i);
+  public void Eva_Lexema_Estado(String entrada, String cad_actual, int estado_interno, int ind ){
+//        TTransiciones transcion;
+        int idEstado = 0;
+        String lexema = "";
+////////////        int estado_interno = 0;
+//        transcion = tab_transiciones.get(idEstado);
+        char c;
+        entrada = entrada + " ";          
+        JOptionPane.showMessageDialog(null, "22#"+entrada +"#");
+        /*
+Estados
+0 = inicial
+1 = conjuntos
+2 = cadena
+
+-99 = estado error
+
+        */
+//////////        String cad_actual ="";
+        int i_cad_actual = 0;
+        String Ir_a_estado_si_exito = "";
+        
+        //for (int i = 0; i < entrada.length() ; i++){
+        for (int i = ind; i < entrada.length() ; i++){
+            //
+            c = entrada.charAt(i); 
+            JOptionPane.showMessageDialog(null, "estado_interno: "+estado_interno + " char: "+c);
+            /*inicializamos con el estado inicial*/
+            switch (estado_interno)
+            {
+//                /*estado inicial*/
+//                case 0:                   
+////                    for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
+////
+////                        String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
+////                        
+////                        if (tipo.equals("CO")) {
+////                            JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+////                            estado_interno = 1;
+////                            //i_cad_actual = 0;
+////                            i--;
+////                        }
+////                        else if (tipo.equals("CA"))
+////                        {
+////                            cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
+////                            Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
+////                            estado_interno = 2;
+////                            i_cad_actual = 0;
+////                            i--;
+////                            JOptionPane.showMessageDialog(null, "CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+//////                            Eva_Cadena(tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+////                        }
+////                    }                
+//
+//                break;
+                
+                /*para armar conjuntos*/
+                case 1:
+                    
+                break; 
+                /*para armar la cadena*/
+                case 2:
+                    lexema += c;
+                    i_cad_actual++;
+                    if (i_cad_actual >  cad_actual.length()) {
+                        estado_interno = -99;
+                    }
+                    String conca_cad = cad_actual.substring(0, i_cad_actual);
+                    //JOptionPane.showMessageDialog(null, "+++cad_actual: "+ cad_actual + " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+                    JOptionPane.showMessageDialog(null, " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+                                       
+                    if (conca_cad.equals(lexema)) {
+                        JOptionPane.showMessageDialog(null, "pasa"); 
+                        if (i_cad_actual ==  cad_actual.length()) {
+                            
+                            //acepta estado
+                            estado_interno = 0;
+                            cad_actual = "";
+                            lexema = "";
+                            //i--;
+                            idEstado = getIndexEstado(Ir_a_estado_si_exito);
+                            
+                            JOptionPane.showMessageDialog(null, "Cadena aceptada - " + idEstado); 
+                        } 
+                    } else {
+                        estado_interno = -99;
+                        JOptionPane.showMessageDialog(null, "se enconetro error, no pasa lexema"); 
+                    }
+                    
+                        break;
+                case -99:
+                    i = entrada.length();
+                    JOptionPane.showMessageDialog(null, "No paso Prueba de Lexema"); 
+                break;                   
+            }
+        }
+    }
+      
+  public void EvaluandoLexema_final(String entrada){
+        TTransiciones transcion;
+        int idEstado = 0;
+        String lexema = "";
+        int estado_interno = 0;
+        transcion = tab_transiciones.get(idEstado);
+        char c;
+        entrada = entrada + " ";
+                 
+        JOptionPane.showMessageDialog(null, "11 #"+entrada +"#");
+        
+        /*
+        Estados
+        0 = inicial
+        1 = conjuntos
+        2 = cadena
+
+        -99 = estado error
+
+        */
+        String cad_actual ="";
+        int i_cad_actual = 0;
+        String Ir_a_estado_si_exito = "";
+        for (int i = 0; i < entrada.length() ; i++){
+            //
+            c = entrada.charAt(i); 
+            JOptionPane.showMessageDialog(null, i+ ") *estado_interno: "+estado_interno + " char: "+c);
+            /*inicializamos con el estado inicial*/
+            
+                    for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
+
+                        String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
+                        
+                        if (tipo.equals("CO")) {
+                            JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            estado_interno = 1;
+                            //i_cad_actual = 0;
+                            i--;
+                        }
+                        else if (tipo.equals("CA"))
+                        {
+                            cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
+                            Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
+                            estado_interno = 2;
+                            i_cad_actual = 0;
+                            i--;
+                            JOptionPane.showMessageDialog(null, "CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            Eva_Lexema_Estado(entrada, cad_actual, estado_interno, i);
+                        }
+                    }
+            
+        }
+    }
+  
+    public void EvaluandoLexema_f(String entrada){
+        TTransiciones transcion;
+        int idEstado = 0;
+        String lexema = "";
+        int estado_interno = 0;
+        transcion = tab_transiciones.get(idEstado);
+        char c;
+        entrada = entrada + " ";
+        
+            
+        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
+        
+//        for (int i = 0; i < tab_transiciones.get(idEstado).ir_a.size() ; i++){
+//            JOptionPane.showMessageDialog(null, tab_transiciones.get(idEstado).ir_a.get(i).terminal );
+//        }
+        /*
+Estados
+0 = inicial
+1 = conjuntos
+2 = cadena
+
+-99 = estado error
+
+        */
+        String cad_actual ="";
+        int i_cad_actual = 0;
+        String Ir_a_estado_si_exito = "";
+        for (int i = 0; i < entrada.length() ; i++){
+            //
+            c = entrada.charAt(i); 
+            JOptionPane.showMessageDialog(null, "estado_interno: "+estado_interno + " char: "+c);
+            /*inicializamos con el estado inicial*/
+            switch (estado_interno)
+            {
+                /*estado inicial*/
+                case 0:
+                    
+                    for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
+
+                        String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
+                        
+                        if (tipo.equals("CO")) {
+                            JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            estado_interno = 1;
+                            //i_cad_actual = 0;
+                            i--;
+                        }
+                        else if (tipo.equals("CA"))
+                        {
+                            cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
+                            Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
+                            estado_interno = 2;
+                            i_cad_actual = 0;
+                            i--;
+                            JOptionPane.showMessageDialog(null, "CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+//                            Eva_Cadena(tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                        }
+                    }
+                    
+//                    /*para numero*/
+//                    if (Character.isDigit(c))
+//                    {
+//                        estado_interno = 2;
+//                        lexema += c;
+//                    }
+//                    /*para cadena*/
+//                    else if (Character.isDigit(c))
+//                    {
+//                        estado_interno = 1;
+//                        lexema += c;
+//                    }
+                break;
+                
+                /*para armar conjuntos*/
+                case 1:
+                    
+                break; 
+                /*para armar la cadena*/
+                case 2:
+                    lexema += c;
+                    i_cad_actual++;
+                    if (i_cad_actual >  cad_actual.length()) {
+                        estado_interno = -99;
+                    }
+                    String conca_cad = cad_actual.substring(0, i_cad_actual);
+                    //JOptionPane.showMessageDialog(null, "+++cad_actual: "+ cad_actual + " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+                    JOptionPane.showMessageDialog(null, " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+                                       
+                    if (conca_cad.equals(lexema)) {
+                        JOptionPane.showMessageDialog(null, "pasa"); 
+                        if (i_cad_actual ==  cad_actual.length()) {
+                            
+                            //acepta estado
+                            estado_interno = 0;
+                            cad_actual = "";
+                            lexema = "";
+                            //i--;
+                            idEstado = getIndexEstado(Ir_a_estado_si_exito);
+                            
+                            JOptionPane.showMessageDialog(null, "Cadena aceptada - " + idEstado); 
+                        } 
+                    } else {
+                        estado_interno = -99;
+                        JOptionPane.showMessageDialog(null, "se enconetro error, no pasa lexema"); 
+                    }
+                    
+                    
+//                        if (Character.isDigit(c))
+//                        {
+//                            lexema += c;
+//                            estado_interno = 2;
+//                        }
+//
+//                        else
+//                        {
+//
+//////                            addToken(lexema, "Digito", fila, columna - lexema.length());
+//                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
+//                            lexema = "";
+//                            i--;
+//                            estado_interno = 0;
+//                        }
+                        break;
+                case -99:
+                    i = entrada.length();
+                    JOptionPane.showMessageDialog(null, "No paso Prueba de Lexema"); 
+                break;   
+//                /*para numero*/
+//                case 2:
+//                        if (Character.isDigit(c))
+//                        {
+//                            lexema += c;
+//                            estado_interno = 2;
+//                        }
+//
+//                        else
+//                        {
+//
+//////                            addToken(lexema, "Digito", fila, columna - lexema.length());
+//                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
+//                            lexema = "";
+//                            i--;
+//                            estado_interno = 0;
+//                        }
+//                        break;
+//                        
+            }
+            
+            
+        }
+    }
+    
+    public void EvaluandoLexema_f_back(String entrada){
+        TTransiciones transcion;
+        int idEstado = 0;
+        String lexema = "";
+        int estado_interno = 0;
+        transcion = tab_transiciones.get(idEstado);
+        char c;
+        entrada = entrada + " ";
+        
+            
+        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
+        
+//        for (int i = 0; i < tab_transiciones.get(idEstado).ir_a.size() ; i++){
+//            JOptionPane.showMessageDialog(null, tab_transiciones.get(idEstado).ir_a.get(i).terminal );
+//        }
+        /*
+Estados
+0 = inicial
+1 = conjuntos
+2 = cadena
+
+-99 = estado error
+
+        */
+        String cad_actual ="";
+        int i_cad_actual = 0;
+        String Ir_a_estado_si_exito = "";
+        for (int i = 0; i < entrada.length() ; i++){
+            //
+            c = entrada.charAt(i); 
+            JOptionPane.showMessageDialog(null, "estado_interno: "+estado_interno + " char: "+c);
+            /*inicializamos con el estado inicial*/
+            switch (estado_interno)
+            {
+                /*estado inicial*/
+                case 0:
+                    
+                    for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
+
+                        String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
+                        
+                        if (tipo.equals("CO")) {
+                            JOptionPane.showMessageDialog(null, "CO: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                            estado_interno = 1;
+                            //i_cad_actual = 0;
+                            i--;
+                        }
+                        else if (tipo.equals("CA"))
+                        {
+                            cad_actual = tab_transiciones.get(idEstado).ir_a.get(j).terminal;
+                            Ir_a_estado_si_exito = tab_transiciones.get(idEstado).ir_a.get(j).Ir_a_Estado;
+                            estado_interno = 2;
+                            i_cad_actual = 0;
+                            i--;
+                            JOptionPane.showMessageDialog(null, "CA: "+ tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+//                            Eva_Cadena(tab_transiciones.get(idEstado).ir_a.get(j).terminal);
+                        }
+                    }
+                    
+//                    /*para numero*/
+//                    if (Character.isDigit(c))
+//                    {
+//                        estado_interno = 2;
+//                        lexema += c;
+//                    }
+//                    /*para cadena*/
+//                    else if (Character.isDigit(c))
+//                    {
+//                        estado_interno = 1;
+//                        lexema += c;
+//                    }
+                break;
+                
+                /*para armar conjuntos*/
+                case 1:
+                    
+                break; 
+                /*para armar la cadena*/
+                case 2:
+                    lexema += c;
+                    i_cad_actual++;
+                    if (i_cad_actual >  cad_actual.length()) {
+                        estado_interno = -99;
+                    }
+                    String conca_cad = cad_actual.substring(0, i_cad_actual);
+                    //JOptionPane.showMessageDialog(null, "+++cad_actual: "+ cad_actual + " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+                    JOptionPane.showMessageDialog(null, " creando cad: " + conca_cad + " - lex: "+ lexema);                  
+                                       
+                    if (conca_cad.equals(lexema)) {
+                        JOptionPane.showMessageDialog(null, "pasa"); 
+                        if (i_cad_actual ==  cad_actual.length()) {
+                            
+                            //acepta estado
+                            estado_interno = 0;
+                            cad_actual = "";
+                            lexema = "";
+                            //i--;
+                            idEstado = getIndexEstado(Ir_a_estado_si_exito);
+                            
+                            JOptionPane.showMessageDialog(null, "Cadena aceptada - " + idEstado); 
+                        } 
+                    } else {
+                        estado_interno = -99;
+                        JOptionPane.showMessageDialog(null, "se enconetro error, no pasa lexema"); 
+                    }
+                    
+                    
+//                        if (Character.isDigit(c))
+//                        {
+//                            lexema += c;
+//                            estado_interno = 2;
+//                        }
+//
+//                        else
+//                        {
+//
+//////                            addToken(lexema, "Digito", fila, columna - lexema.length());
+//                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
+//                            lexema = "";
+//                            i--;
+//                            estado_interno = 0;
+//                        }
+                        break;
+                case -99:
+                    i = entrada.length();
+                    JOptionPane.showMessageDialog(null, "No paso Prueba de Lexema"); 
+                break;   
+//                /*para numero*/
+//                case 2:
+//                        if (Character.isDigit(c))
+//                        {
+//                            lexema += c;
+//                            estado_interno = 2;
+//                        }
+//
+//                        else
+//                        {
+//
+//////                            addToken(lexema, "Digito", fila, columna - lexema.length());
+//                            JOptionPane.showMessageDialog(null,"num: " +  lexema);
+//                            lexema = "";
+//                            i--;
+//                            estado_interno = 0;
+//                        }
+//                        break;
+//                        
+            }
             
             
         }

@@ -562,7 +562,7 @@ pref_er.add(new ER_unitario("b", "CA"));
             
             tree.graficando_Automata();
             
-            tree.EvaluandoLexema_f(lis_evaluar_expre.get(0).cadena_eva);
+            tree.EvaluandoLexema_final(lis_evaluar_expre.get(0).cadena_eva);
         
         }
         
