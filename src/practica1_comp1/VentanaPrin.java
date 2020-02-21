@@ -552,8 +552,16 @@ pref_er.add(new ER_unitario("b", "CA"));
             ////transiciones
             //tree.TabTransiciones();
             tree.Create_TabTransiciones();
+            
+            
+            
+            tree.graficando_Automata();
         
         }
+        
+    }
+    
+    public void Buscando_Expre_a_evaluar(){
         
     }
     

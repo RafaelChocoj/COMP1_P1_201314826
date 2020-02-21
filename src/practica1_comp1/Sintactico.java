@@ -23,6 +23,9 @@ public class Sintactico {
      /*para variables de expresiones regulares*/
     LinkedList<VarExpReg> lis_ex_reg;
     
+    /*para evaluar las expresiones regulares*/
+    LinkedList<Exp_a_Evaluar> lis_evaluar_expre;
+    
     LinkedList<Token> listaTokens;
     int numPreanalisis;
     Token preanalisis;
@@ -37,6 +40,9 @@ public class Sintactico {
         /*inicializando lista de expresiones regulares*/
         lis_ex_reg = new LinkedList<VarExpReg>();
         
+        /*inicializando evaluar las expresiones regulares*/
+        lis_evaluar_expre = new LinkedList<>();
+    
         //valores = new LinkedList<String>();
         
 //        nodos = 0;
@@ -79,8 +85,14 @@ public class Sintactico {
     public void EVA_ER(){
         if (preanalisis.idToken.equals("Identificador"))
         {
+            String iden = preanalisis.lexema;
             match("Identificador"); // name var ex regular
-            match("Igualdad"); // ->
+            //match("Igualdad"); // ->
+            match("DosPuntos"); // :
+            //JOptionPane.showMessageDialog(null,"-- Cadena. " + iden+"-" + preanalisis.lexema.replace("\"", "") );           
+            Exp_a_Evaluar eva = new Exp_a_Evaluar(iden, preanalisis.lexema.replace("\"", ""));
+            lis_evaluar_expre.add(eva);
+            
             match("Cadena"); // cadena
             match("PuntoComa"); // ;
             
@@ -342,6 +354,10 @@ public class Sintactico {
     
     public LinkedList<VarExpReg> getLista_ExpRegulares(){
         return this.lis_ex_reg;
+    }
+    
+    public LinkedList<Exp_a_Evaluar> getLista_Evaluar(){
+        return this.lis_evaluar_expre;
     }
     
     /*imprime variables y sus valores*/

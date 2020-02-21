@@ -1,11 +1,12 @@
 digraph G { rankdir=LR
 node [shape=record];
-node0[label="{{Estado|S0|S1|S2}
-|{ siguientes|[1]|[2, 3, 4]|[2, 3, 4, 5]}
-|{ terminal|{a -\> S1}
-|{a -\> S1|b -\> S2}
-|{a -\> S1|b -\> S2}
+node0[label="{{Estado|S0|S1|S2|S3}
+|{ siguientes|[1]|[1, 2, 3, 4, 5]|[6]|[2, 3, 4, 5, 6, 7]}
+|{ terminal|{digito -\> S1}
+|{digito -\> S1|+ -\> S2|- -\> S2|* -\> S2|/ -\> S2}
+|{digito -\> S3}
+|{+ -\> S2|- -\> S2|* -\> S2|/ -\> S2|digito -\> S3}
 }
-|{Tipo |N|N|N}
+|{Tipo |I|N|N|F}
 }"];
 }

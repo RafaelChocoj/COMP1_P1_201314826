@@ -1,7 +1,7 @@
 digraph G { rankdir=LR
 node [shape=record];
-node0[label="{{Hoja|a|a|b|b|#}
-|{Hoja ID |1|2|3|4|5}
-|{Siguientes |[2, 3, 4]|[2, 3, 4]|[2, 3, 4]|[5]|[]}
+node0[label="{{Hoja|digito|+|-|*|/|digito|#}
+|{Hoja ID |1|2|3|4|5|6|7}
+|{Siguientes |[1, 2, 3, 4, 5]|[6]|[6]|[6]|[6]|[6, 2, 3, 4, 5, 7]|[]}
 }"];
 }
