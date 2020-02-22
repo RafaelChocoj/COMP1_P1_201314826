@@ -5,22 +5,19 @@
  */
 package practica1_comp1;
 
-import java.util.LinkedList;
-
 /**
  *
  * @author RAFAEL
  */
-public class Practica1_comp1 {
+public class ListadoArboles {
+    String name_expresion;
+    Arbol arbol;
+    
+    public ListadoArboles (String name_expresion, Arbol arbol){
+        
+        this.name_expresion = name_expresion;
+        this.arbol = arbol;
 
-    /**
-     * @param args the command line arguments
-     */
-
-    public static void main(String[] args) {
-
-        VentanaPrin ven = new VentanaPrin();
-        ven.setVisible(true);
     }
     
 }

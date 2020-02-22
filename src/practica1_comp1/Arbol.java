@@ -23,12 +23,19 @@ public class Arbol {
     LinkedList<TTransiciones> tab_transiciones;
             
    LinkedList<Variables> lis_conjuntos;
+   String name_expre;
+   
+   
+   LinkedList<String> resul_expresiones;
    
     NodeArbol root;
-    public Arbol (NodeArbol root){
+    public Arbol (NodeArbol root, String name_expre){
         this.root = root;
+        this.name_expre = name_expre;
         
         tabla_siguientes = new LinkedList<>();
+        
+        resul_expresiones = new LinkedList<>();
     }
     
     //////////////////////////////////////inicio graficando arbol
@@ -43,7 +50,7 @@ public class Arbol {
         this.VerArbol(graf);
         graf.append("\n}\n");
         
-        return this.graf_arbolavl(graf.toString(), "arbol_a");
+        return this.graf_arbolavl(graf.toString(), "arbol_a_" + name_expre);
   
     }
     
@@ -213,7 +220,7 @@ public class Arbol {
         graf.append("}");
 
         //JOptionPane.showMessageDialog(null,graf);
-        return this.graf_arbolavl(graf.toString(),"tab_sig");
+        return this.graf_arbolavl(graf.toString(),"tab_sig_"+ name_expre);
     }
     
     public boolean graficando_tabTransiciones_back(){
@@ -259,7 +266,7 @@ public class Arbol {
         graf.append("}");
 
         //JOptionPane.showMessageDialog(null,graf);
-        return this.graf_arbolavl(graf.toString(),"tab_tran");
+        return this.graf_arbolavl(graf.toString(),"tab_tran_"  + name_expre);
     }
     
     public boolean graficando_tabTransiciones(){
@@ -348,7 +355,7 @@ public class Arbol {
         graf.append("}");
 
         //JOptionPane.showMessageDialog(null,graf);
-        return this.graf_arbolavl(graf.toString(),"tab_tran");
+        return this.graf_arbolavl(graf.toString(),"tab_tran_"+ name_expre);
     }
     
     /*graficando automata*/
@@ -387,7 +394,7 @@ public class Arbol {
         graf.append("\n}");
 
         //JOptionPane.showMessageDialog(null,graf);
-        return this.graf_arbolavl(graf.toString(),"graf_automata");
+        return this.graf_arbolavl(graf.toString(),"graf_automata_"+ name_expre);
     }
     
     //////////////////////////////////
@@ -1038,7 +1045,7 @@ Estados
         for (int i = ind; i < entrada.length() ; i++){
             //
             c = entrada.charAt(i); 
-            JOptionPane.showMessageDialog(null, "2e"+estado_interno + " cccccccccccccccc: "+c);
+//////////////////            JOptionPane.showMessageDialog(null, "2e"+estado_interno + " cccccccccccccccc: "+c);
             /*inicializamos con el estado inicial*/
             switch (estado_interno)
             {                   
@@ -1139,7 +1146,7 @@ Estados
         char c;
 ////////        entrada = entrada + " ";
                  
-        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
+////////        JOptionPane.showMessageDialog(null, "#"+entrada +"#");
         
         /*
         Estados
@@ -1161,7 +1168,7 @@ Estados
             
                     boolean pasa = false;
                     for (int j = 0; j < tab_transiciones.get(idEstado).ir_a.size() ; j++){
-//JOptionPane.showMessageDialog(null," ccccccccccccc: "+c);
+//////////////JOptionPane.showMessageDialog(null,j + "jjjjjj pasa: "+pasa);
                         String tipo = tab_transiciones.get(idEstado).ir_a.get(j).Tipo_ter;
                         
                         if (tipo.equals("CO")) {
@@ -1177,14 +1184,15 @@ Estados
                                 i = indice_continuar+1;
                                 j = -1;
                                 idEstado = getIndexEstado(Ir_a_estado_si_exito);
-                                JOptionPane.showMessageDialog(null, "CO pasa: "+ pasa+ " Ir_a_estado_si_exito: " + Ir_a_estado_si_exito);
+//////////////                                JOptionPane.showMessageDialog(null, "CO pasa: "+ pasa+ " Ir_a_estado_si_exito: " + Ir_a_estado_si_exito);
+                                
                             }
                             String Aceptacion = tab_transiciones.get(idEstado).terminal;
-                            if (Aceptacion.equals("F") ) {
-                                Acepta_lexema = true;
-                            } else {
-                                Acepta_lexema = false;
-                            }
+                                if (Aceptacion.equals("F") ) {
+                                    Acepta_lexema = true;
+                                } else {
+                                    Acepta_lexema = false;
+                                }
          
 ////////////                            JOptionPane.showMessageDialog(null,"1 vf Aceptacion: "+ Aceptacion + " idEstado = " + idEstado);
                         
@@ -1202,7 +1210,7 @@ Estados
                                 i = indice_continuar+1;
                                 j = -1;
                                 idEstado = getIndexEstado(Ir_a_estado_si_exito); 
-                                JOptionPane.showMessageDialog(null, "CA pasa: "+ pasa+ " Ir_a_estado_si_exito: " + Ir_a_estado_si_exito);
+////////////////                                JOptionPane.showMessageDialog(null, "CA pasa: "+ pasa+ " Ir_a_estado_si_exito: " + Ir_a_estado_si_exito);
                             }
                             String Aceptacion = tab_transiciones.get(idEstado).terminal;
                             if (Aceptacion.equals("F") ) {
@@ -1219,9 +1227,10 @@ Estados
 //            if (Acepta_lexema){
 //                //JOptionPane.showMessageDialog(null, "*************LEXEMA CORRECTO ");
 //            } else {
+
                 JOptionPane.showMessageDialog(null, " pasa: "+ pasa);
                 if (pasa==false) {
-                    Acepta_lexema = false;
+                    //Acepta_lexema = false;
                     i = entrada.length();
                     //JOptionPane.showMessageDialog(null, "*************************termino, No ");
                 }
@@ -1229,11 +1238,17 @@ Estados
         }
         
         if (Acepta_lexema){
-                JOptionPane.showMessageDialog(null, "*************LEXEMA CORRECTO ");
+////////                JOptionPane.showMessageDialog(null, "*************LEXEMA CORRECTO ");
+                resul_expresiones.add(entrada + "// validacion exitosa del lexema");
             } else {
-                    JOptionPane.showMessageDialog(null, "*************************termino, No ");
+////////                    JOptionPane.showMessageDialog(null, "*************************termino, No ");
+                    resul_expresiones.add(entrada + "// error en la validacion del lexema");
             }
     }
+  
+  public LinkedList<String> getResul_ex(){
+      return resul_expresiones;
+  }
   
     public void EvaluandoLexema_f(String entrada){
         TTransiciones transcion;

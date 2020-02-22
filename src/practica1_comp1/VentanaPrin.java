@@ -28,7 +28,9 @@ public class VentanaPrin extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPrin
      */
-    
+    ////////////guarda listado de arboles generados
+    LinkedList<ListadoArboles> lis_arbol_expre;
+            
     /*conjuntos*/
     LinkedList<Variables> lis_var;
      /*lista expresiones regulares*/
@@ -44,6 +46,8 @@ public class VentanaPrin extends javax.swing.JFrame {
     File archivo;
     public VentanaPrin() {
         initComponents();
+        
+        lis_arbol_expre = new LinkedList<>();
     }
 
     /**
@@ -61,6 +65,9 @@ public class VentanaPrin extends javax.swing.JFrame {
         b_prob_ar = new javax.swing.JButton();
         b_crear_arbol = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        pan2 = new javax.swing.JScrollPane();
+        area2 = new javax.swing.JTextArea();
+        b_lex = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         m_abrir = new javax.swing.JMenuItem();
@@ -100,6 +107,17 @@ public class VentanaPrin extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        area2.setColumns(20);
+        area2.setRows(5);
+        pan2.setViewportView(area2);
+
+        b_lex.setText("Evaluar Lexemas");
+        b_lex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_lexActionPerformed(evt);
             }
         });
 
@@ -143,33 +161,44 @@ public class VentanaPrin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrolpan, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(n_analizar)
-                        .addGap(33, 33, 33)
-                        .addComponent(b_prob_ar)
-                        .addGap(27, 27, 27)
-                        .addComponent(b_crear_arbol, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(168, 168, 168)
-                        .addComponent(jButton1))
-                    .addComponent(scrolpan, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(224, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(b_lex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(n_analizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(b_crear_arbol, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(822, 822, 822)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(b_prob_ar)))))
+                .addContainerGap(423, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(scrolpan, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(scrolpan, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(pan2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(n_analizar)
+                    .addComponent(b_crear_arbol))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(b_prob_ar)
-                            .addComponent(b_crear_arbol)
-                            .addComponent(n_analizar)))
+                            .addComponent(jButton1)
+                            .addComponent(b_prob_ar)))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(b_lex)))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         pack();
@@ -273,6 +302,20 @@ public class VentanaPrin extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_m_saveasActionPerformed
 
+    public void imprimir_errLex(){
+        area2.setText("");
+        for (int i = 0; i < err_lex.size(); ++i)
+        { 
+            area2.setText(area2.getText() +err_lex.get(i) + "\n");
+        }
+        
+        for (int i = 0; i < err_sin.size(); ++i)
+        { 
+            area2.setText(area2.getText() +err_sin.get(i) + "\n");
+        }
+    }
+    LinkedList<String> err_lex;
+    LinkedList<String> err_sin;
     private void n_analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_n_analizarActionPerformed
        String texto = jtxtarea1.getText();
        //JOptionPane.showMessageDialog(null, texto);
@@ -281,7 +324,10 @@ public class VentanaPrin extends javax.swing.JFrame {
        analisis_lex.Analizador_cadena(texto);
        
        analisis_lex.ImprimeTokens();
-       System.err.println("------------------------" );
+       /////System.err.println("------------------------" );
+       err_lex = analisis_lex.getErr_lex();
+       
+               
        Sintactico sin = new Sintactico();
        sin.Parsear(analisis_lex.lis_tokens);
        
@@ -294,7 +340,11 @@ public class VentanaPrin extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null,lis_evaluar_expre.get(i).identificador + " - "  + lis_evaluar_expre.get(i).cadena_eva);
 //        }
  
-       JOptionPane.showMessageDialog(null,"termino el sintatico");
+       
+        err_sin = sin.getList_sin();
+        imprimir_errLex();
+        
+        JOptionPane.showMessageDialog(null,"termino el analisis");
 //       sin.Imprime_var();
 //       
 //       sin.Imprime_ER();
@@ -451,7 +501,7 @@ pref_er.add(new ER_unitario("b", "CA"));
         root = arbol.leyendo_expresiones();
         /////JOptionPane.showMessageDialog(null,"res arbol: " + root);
         
-        Arbol tree = new Arbol(root);
+        Arbol tree = new Arbol(root, "ejemplo");
         
         tree.preOrder();
         
@@ -472,7 +522,12 @@ pref_er.add(new ER_unitario("b", "CA"));
 
     private void b_crear_arbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_crear_arbolActionPerformed
 
-        Crea_Three_ER();
+        //Crea_Three_ER();
+        if (err_lex.size() == 0 && err_sin.size() == 0) {
+            Crea_Three_ER();
+        } else{
+            JOptionPane.showMessageDialog(null,"Corriga errores para graficar");
+        }
     }//GEN-LAST:event_b_crear_arbolActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -517,6 +572,54 @@ pref_er.add(new ER_unitario("b", "CA"));
 //        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public int ObtenerIndiceArbol(String exp){
+        
+        for (int i = 0; i < lis_arbol_expre.size(); ++i)
+        {             
+              if (lis_arbol_expre.get(i).name_expresion.equals(exp)) {
+                return i;
+            }
+        }
+        return -99;
+    }
+    
+    LinkedList<String> resul_lis;
+    
+     public void lis_resul(){
+        area2.setText("");
+        for (int i = 0; i < resul_lis.size(); ++i)
+        { 
+            area2.setText(area2.getText() + resul_lis.get(i) + "\n");
+        }
+        
+    }
+     
+    private void b_lexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_lexActionPerformed
+        // TODO add your handling code here:
+        
+        //lis_evaluar_expre.get(0).cadena_eva, lis_var);
+        for (int i = 0; i < lis_evaluar_expre.size(); ++i)
+        {
+            //JOptionPane.showMessageDialog(null,"--- " + lis_var.get(i).name_var);
+            JOptionPane.showMessageDialog(null, "Evaliando: " + lis_evaluar_expre.get(i).identificador /*+ " - "
+                    +lis_evaluar_expre.get(i).cadena_eva*/);
+            int exist = ObtenerIndiceArbol(lis_evaluar_expre.get(i).identificador);   
+            
+            if (exist == -99) {
+                area2.setText("No existe expresion Regular para "  + lis_evaluar_expre.get(i).identificador);
+            } else
+            {
+                Arbol tree;
+                tree = lis_arbol_expre.get(exist).arbol;
+   
+                tree.EvaluandoLexema_final(lis_evaluar_expre.get(i).cadena_eva, lis_var);
+                resul_lis = tree.getResul_ex();
+                lis_resul();
+            }
+
+        }
+    }//GEN-LAST:event_b_lexActionPerformed
+
     public boolean exite(LinkedList<Integer> lis1, int v2){
         for (int i = 0; i < lis1.size(); i++) {
             if (lis1.get(i)== v2){
@@ -525,9 +628,19 @@ pref_er.add(new ER_unitario("b", "CA"));
         }
         return false;
     }
+    
+    public void lis_ar(){
+        area2.setText("");
+        for (int i = 0; i < lis_arbol_expre.size(); ++i)
+        { 
+            area2.setText(area2.getText() + lis_arbol_expre.get(i).name_expresion + "\n");
+        }
+        
+    }
     public void Crea_Three_ER(){
         /*probando armando el arbol*/
-        
+        LinkedList<ListadoArboles> lis_arnew = new LinkedList<>();
+        lis_arbol_expre = lis_arnew;
         for (int i = 0; i < lis_ex_reg.size(); ++i)
         { 
             JOptionPane.showMessageDialog(null,  lis_ex_reg.get(i).name_exreg /*+ " - "
@@ -541,9 +654,13 @@ pref_er.add(new ER_unitario("b", "CA"));
             Armando_RPN arbol =  new Armando_RPN(pref_er);
             NodeArbol root_exp;
             root_exp = arbol.leyendo_expresiones();
+            
             /////JOptionPane.showMessageDialog(null,"res arbol: " + root);
 
-            Arbol tree = new Arbol(root_exp);
+            
+            ///////////////////inicioa graficas
+            //Arbol tree = new Arbol(root_exp);
+            Arbol tree = new Arbol(root_exp, lis_ex_reg.get(i).name_exreg);
 
             tree.preOrder();
             
@@ -557,14 +674,18 @@ pref_er.add(new ER_unitario("b", "CA"));
             ////transiciones
             //tree.TabTransiciones();
             tree.Create_TabTransiciones();
-            
-            
-            
             tree.graficando_Automata();
             
-            tree.EvaluandoLexema_final(lis_evaluar_expre.get(0).cadena_eva, lis_var);
+            ListadoArboles ar = new ListadoArboles(lis_ex_reg.get(i).name_exreg, tree);
+            lis_arbol_expre.add(ar);
+//            
+//////////           tree.EvaluandoLexema_final(lis_evaluar_expre.get(0).cadena_eva, lis_var);
+//            
+//            ////////////////fin graficas
         
         }
+        lis_ar();
+        JOptionPane.showMessageDialog(null, "Termino de graficar");
         
     }
     
@@ -774,7 +895,9 @@ pref_er.add(new ER_unitario("b", "CA"));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea area2;
     private javax.swing.JButton b_crear_arbol;
+    private javax.swing.JButton b_lex;
     private javax.swing.JButton b_prob_ar;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu2;
@@ -785,6 +908,7 @@ pref_er.add(new ER_unitario("b", "CA"));
     private javax.swing.JMenuItem m_save;
     private javax.swing.JMenuItem m_saveas;
     private javax.swing.JButton n_analizar;
+    private javax.swing.JScrollPane pan2;
     private javax.swing.JScrollPane scrolpan;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,25 @@
+digraph G { 
+rankdir=TB;
+graph [nodesep=0.5 ];
+node [shape = record, fillcolor=seashell2];
+"nodoa2" [ label ="<C0>1| F\na\niden: 1\n|<C1>1"]; 
+"nodo.1":C1 -> "nodo*3"
+"nodo.1":C0 -> "nodoa2"
+"nodo.1" [ label ="<C0>1| F\n.\n|<C1>1, 2, 3"]; 
+"nodo*3":C1 -> "nodo|4"
+"nodo*3" [ label ="<C0>2, 3| V\n*\n|<C1>2, 3"]; 
+"nodoa5" [ label ="<C0>2| F\na\niden: 2\n|<C1>2"]; 
+"nodo|4":C1 -> "nodob6"
+"nodo|4":C0 -> "nodoa5"
+"nodo|4" [ label ="<C0>2, 3| F\n\|\n|<C1>2, 3"]; 
+"nodob6" [ label ="<C0>3| F\nb\niden: 3\n|<C1>3"]; 
+"nodo.0":C1 -> "nodob7"
+"nodo.0":C0 -> "nodo.1"
+"nodo.0" [ label ="<C0>1| F\n.\n|<C1>4"]; 
+"nodob7" [ label ="<C0>4| F\nb\niden: 4\n|<C1>4"]; 
+"nodo.-88":C1 -> "nodo#-99"
+"nodo.-88":C0 -> "nodo.0"
+"nodo.-88" [ label ="<C0>1| F\n.\n|<C1>5"]; 
+"nodo#-99" [ label ="<C0>5| F\n#\niden: 5\n|<C1>5"]; 
+
+}

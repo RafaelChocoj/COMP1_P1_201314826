@@ -11,16 +11,9 @@ import java.util.LinkedList;
  *
  * @author RAFAEL
  */
-public class Practica1_comp1 {
-
-    /**
-     * @param args the command line arguments
-     */
-
-    public static void main(String[] args) {
-
-        VentanaPrin ven = new VentanaPrin();
-        ven.setVisible(true);
+public class Errores {
+    LinkedList<String> list_err;
+    public Errores (LinkedList<String> list_err){
+        this.list_err = list_err;
     }
-    
 }

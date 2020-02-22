@@ -16,10 +16,14 @@ public class Lexico {
     
     LinkedList<Token> lis_tokens;
     LinkedList<String> reservadas;
+    
+    LinkedList<String> list_err;
     public Lexico() {
        lis_tokens = new LinkedList<Token>();
        reservadas = new LinkedList<String>();
        reservadas.add("CONJ");
+       
+       list_err = new LinkedList<>();
     }
     
     public void addToken(String lexema, String idToken, int linea, int columna)
@@ -44,7 +48,7 @@ public class Lexico {
             char c;
             entrada = entrada + " ";
             
-            JOptionPane.showMessageDialog(null, /*"#"+*/entrada/*+"#"*/);
+//            JOptionPane.showMessageDialog(null, /*"#"+*/entrada/*+"#"*/);
             for (int i = 0; i < entrada.length() ; i++)
             {
                 c = entrada.charAt(i); 
@@ -541,7 +545,11 @@ public class Lexico {
                         //System.out.println("error lexico ("  + ")" );
                         //JOptionPane.showMessageDialog(null, c );
                         //JOptionPane.showMessageDialog(null, lexema + " Carácter Desconocido, fil:" + fila + ", col: " + (columna - lexema.length()));
-                        System.out.println("error lexico (" + lexema + ")" );
+                        //System.out.println("error lexico (" + lexema + ")" );
+//                        Errores err = new Errores("error lexico (" + lexema + ")" );
+//                        Practica1_comp1.list_err.add(err);
+                        list_err.add("error lexico (" + lexema + ")");
+      
                         //addError(lexema, "Carácter Desconocido", fila, columna - lexema.Length);
                         estado = 0;
                         lexema = "";
@@ -550,6 +558,10 @@ public class Lexico {
             } ///fin for
         }
     
+    
+    public LinkedList<String> getErr_lex(){
+        return list_err;
+    }
     
     public boolean Macht_enReser(String sente)
     {

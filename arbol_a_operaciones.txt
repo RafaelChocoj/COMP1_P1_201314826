@@ -1,0 +1,37 @@
+digraph G { 
+rankdir=TB;
+graph [nodesep=0.5 ];
+node [shape = record, fillcolor=seashell2];
+"nodo+1":C1 -> "nododigito2"
+"nodo+1" [ label ="<C0>1| F\n+\n|<C1>1"]; 
+"nododigito2" [ label ="<C0>1| F\ndigito\niden: 1\n|<C1>1"]; 
+"nodo.0":C1 -> "nodo+3"
+"nodo.0":C0 -> "nodo+1"
+"nodo.0" [ label ="<C0>1| F\n.\n|<C1>6"]; 
+"nodo+3":C1 -> "nodo.4"
+"nodo+3" [ label ="<C0>2, 3, 4, 5| F\n+\n|<C1>6"]; 
+"nodo+6" [ label ="<C0>2| F\n+\niden: 2\n|<C1>2"]; 
+"nodo|5":C1 -> "nodo|7"
+"nodo|5":C0 -> "nodo+6"
+"nodo|5" [ label ="<C0>2, 3, 4, 5| F\n\|\n|<C1>2, 3, 4, 5"]; 
+"nodo-8" [ label ="<C0>3| F\n-\niden: 3\n|<C1>3"]; 
+"nodo|7":C1 -> "nodo|9"
+"nodo|7":C0 -> "nodo-8"
+"nodo|7" [ label ="<C0>3, 4, 5| F\n\|\n|<C1>3, 4, 5"]; 
+"nodo*10" [ label ="<C0>4| F\n*\niden: 4\n|<C1>4"]; 
+"nodo|9":C1 -> "nodo/11"
+"nodo|9":C0 -> "nodo*10"
+"nodo|9" [ label ="<C0>4, 5| F\n\|\n|<C1>4, 5"]; 
+"nodo/11" [ label ="<C0>5| F\n/\niden: 5\n|<C1>5"]; 
+"nodo.4":C1 -> "nodo+12"
+"nodo.4":C0 -> "nodo|5"
+"nodo.4" [ label ="<C0>2, 3, 4, 5| F\n.\n|<C1>6"]; 
+"nodo+12":C1 -> "nododigito13"
+"nodo+12" [ label ="<C0>6| F\n+\n|<C1>6"]; 
+"nododigito13" [ label ="<C0>6| F\ndigito\niden: 6\n|<C1>6"]; 
+"nodo.-88":C1 -> "nodo#-99"
+"nodo.-88":C0 -> "nodo.0"
+"nodo.-88" [ label ="<C0>1| F\n.\n|<C1>7"]; 
+"nodo#-99" [ label ="<C0>7| F\n#\niden: 7\n|<C1>7"]; 
+
+}

@@ -29,11 +29,14 @@ public class Sintactico {
     LinkedList<Token> listaTokens;
     int numPreanalisis;
     Token preanalisis;
+    
+    LinkedList<String> err_sin;
     public Sintactico() {
     }
     
     public void Parsear(LinkedList<Token> list)
     {
+        err_sin = new LinkedList<String>();
         /*inicializando lista de variables*/
         lis_var = new LinkedList<Variables>();
         
@@ -109,7 +112,8 @@ public class Sintactico {
             
         }
         else {
-            JOptionPane.showMessageDialog(null,"Error se Esperaba un Identificador. " + preanalisis.lexema );
+            //JOptionPane.showMessageDialog(null,"Error se Esperaba un Identificador. " + preanalisis.lexema );
+            err_sin.add("Error se Esperaba un Identificador. " + preanalisis.lexema );
         }
     }
     
@@ -165,7 +169,8 @@ public class Sintactico {
         }
         else
         {
-            JOptionPane.showMessageDialog(null,"Error se Esperaba un operador ER. " + preanalisis.lexema );
+            //JOptionPane.showMessageDialog(null,"Error se Esperaba un operador ER. " + preanalisis.lexema );
+            err_sin.add("Error se Esperaba un operador ER. " + preanalisis.lexema );
             //error
             er_sim = true;
         }
@@ -285,7 +290,8 @@ public class Sintactico {
             match("Digito"); //1
         }
         else {
-            JOptionPane.showMessageDialog(null,"Error Sintactico se esperaba un caracter o Dijito lexema: " + preanalisis.lexema );
+            //JOptionPane.showMessageDialog(null,"Error Sintactico se esperaba un caracter o Dijito lexema: " + preanalisis.lexema );
+             err_sin.add("Error Sintactico se esperaba un caracter o Dijito lexema: " + preanalisis.lexema );
         }
     }
     public void VAL_CON(LinkedList<String> valores) {
@@ -305,6 +311,7 @@ public class Sintactico {
             VALOR_UNITARIO(valores);//VALOR FINAL
             match("PuntoComa"); //;
             
+            JOptionPane.showMessageDialog(null,"rengo valores: " + valores );
             Variables n_var = new Variables(var_tempo, valores, "R");
             lis_var.add(n_var);
             var_tempo ="";
@@ -330,7 +337,8 @@ public class Sintactico {
 //////////////////////       JOptionPane.showMessageDialog(null,"*******Actual= " + tipo + "************ lexema= " + preanalisis.lexema);
         if (!tipo.equals(preanalisis.idToken ))
         {
-            JOptionPane.showMessageDialog(null,"Error Sintactico se esperaba un caracter TIPO " + tipo + ", lexema: " + preanalisis.lexema );
+            //JOptionPane.showMessageDialog(null,"Error Sintactico se esperaba un caracter TIPO " + tipo + ", lexema: " + preanalisis.lexema );
+            err_sin.add("Error Sintactico se esperaba un caracter TIPO " + tipo + ", lexema: " + preanalisis.lexema );
 //            //lexema, idToken, linea, columna
 //            addError(lexe_ac, des_er, preanalisis.getLinea(), preanalisis.getColumna());
 //            can_erroes++;
@@ -344,7 +352,9 @@ public class Sintactico {
         {
             numPreanalisis++;
             preanalisis = listaTokens.get(numPreanalisis);
-        } else {JOptionPane.showMessageDialog(null,"fin token");}
+        } else {
+            /*JOptionPane.showMessageDialog(null,"fin token");*/
+        }
 
     }
     /*retorna lista de expresiones */
@@ -372,23 +382,27 @@ public class Sintactico {
         
     }
     
-    public void Imprime_ER(){
-        /*probando armando el arbol*/
-        
-        for (int i = 0; i < lis_ex_reg.size(); ++i)
-        { 
-            JOptionPane.showMessageDialog(null,  lis_ex_reg.get(i).name_exreg + " - "
-                   /* +lis_ex_reg.get(i).toString()*/ );
-            
-            
-            ///
-            Armando_RPN arbol =  new Armando_RPN(lis_ex_reg.get(i).prefijo);
-            NodeArbol roor = arbol.leyendo_expresiones();
-            Arbol tree = new Arbol(roor);
-            tree.Graficando_arbol();
-        
-        }
-        
+//    public void Imprime_ER(){
+//        /*probando armando el arbol*/
+//        
+//        for (int i = 0; i < lis_ex_reg.size(); ++i)
+//        { 
+//            JOptionPane.showMessageDialog(null,  lis_ex_reg.get(i).name_exreg + " - "
+//                   /* +lis_ex_reg.get(i).toString()*/ );
+//            
+//            
+//            ///
+//            Armando_RPN arbol =  new Armando_RPN(lis_ex_reg.get(i).prefijo);
+//            NodeArbol roor = arbol.leyendo_expresiones();
+//            Arbol tree = new Arbol(roor);
+//            tree.Graficando_arbol();
+//        
+//        }
+//        
+//    }
+    
+    public LinkedList<String> getList_sin(){
+        return err_sin;
     }
     
 }
