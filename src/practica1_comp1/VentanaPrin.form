@@ -87,6 +87,10 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="b_prob_ar" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="446" max="-2" attributes="0"/>
+                              <Component id="xd" min="-2" pref="94" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -116,7 +120,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="b_lex" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="b_lex" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="xd" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace pref="70" max="32767" attributes="0"/>
@@ -191,6 +198,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_lexActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="xd">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Automata"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -1074,6 +1074,20 @@ Estados
                         }
                         
                     }
+//                    else if (conjunto.tipo.equals("R")) {
+////                        boolean existe = existe_valor_enConjunto(String.valueOf(c),conjunto.valores);
+////                        
+////                        if (existe) {
+////                            estado_interno = 0;
+////                            cad_actual = "";
+////                            lexema = "";
+////                            indice_continuar = i;
+////                            return true;
+////                        } else {
+////                            return false;
+////                        }
+//                        
+//                    }
                     
                 break; 
                 /*para armar la cadena*/
@@ -1126,6 +1140,15 @@ Estados
       }
       return false;
   }
+  
+//  public boolean existe_Rango_enConjunto(String val, LinkedList<String> valores){
+//      for (int i = 0; i < valores.size() ; i++){
+//          if (val.equals(valores.get(i))) {
+//              return true;
+//          }
+//      }
+//      return false;
+//  }
   public Variables existeCon(String name_con){
       
       for (int i = 0; i < lis_conjuntos.size() ; i++){
@@ -1228,7 +1251,7 @@ Estados
 //                //JOptionPane.showMessageDialog(null, "*************LEXEMA CORRECTO ");
 //            } else {
 
-                JOptionPane.showMessageDialog(null, " pasa: "+ pasa);
+//////////////                JOptionPane.showMessageDialog(null, " pasa: "+ pasa);
                 if (pasa==false) {
                     //Acepta_lexema = false;
                     i = entrada.length();

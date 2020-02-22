@@ -68,6 +68,7 @@ public class VentanaPrin extends javax.swing.JFrame {
         pan2 = new javax.swing.JScrollPane();
         area2 = new javax.swing.JTextArea();
         b_lex = new javax.swing.JButton();
+        xd = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         m_abrir = new javax.swing.JMenuItem();
@@ -120,6 +121,8 @@ public class VentanaPrin extends javax.swing.JFrame {
                 b_lexActionPerformed(evt);
             }
         });
+
+        xd.setText("Automata");
 
         jMenu2.setText("Archivo");
 
@@ -175,7 +178,10 @@ public class VentanaPrin extends javax.swing.JFrame {
                                 .addGap(822, 822, 822)
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(b_prob_ar)))))
+                                .addComponent(b_prob_ar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(446, 446, 446)
+                                .addComponent(xd, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(423, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,7 +203,9 @@ public class VentanaPrin extends javax.swing.JFrame {
                             .addComponent(b_prob_ar)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(b_lex)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(b_lex)
+                            .addComponent(xd))))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
 
@@ -586,7 +594,7 @@ pref_er.add(new ER_unitario("b", "CA"));
     LinkedList<String> resul_lis;
     
      public void lis_resul(){
-        area2.setText("");
+        area2.setText( area2.getText() + "-----------" + "\n");
         for (int i = 0; i < resul_lis.size(); ++i)
         { 
             area2.setText(area2.getText() + resul_lis.get(i) + "\n");
@@ -910,5 +918,6 @@ pref_er.add(new ER_unitario("b", "CA"));
     private javax.swing.JButton n_analizar;
     private javax.swing.JScrollPane pan2;
     private javax.swing.JScrollPane scrolpan;
+    private javax.swing.JLabel xd;
     // End of variables declaration//GEN-END:variables
 }

@@ -311,8 +311,25 @@ public class Sintactico {
             VALOR_UNITARIO(valores);//VALOR FINAL
             match("PuntoComa"); //;
             
-            JOptionPane.showMessageDialog(null,"rengo valores: " + valores );
-            Variables n_var = new Variables(var_tempo, valores, "R");
+//            JOptionPane.showMessageDialog(null,"rengo valores: " + valores );
+//            JOptionPane.showMessageDialog(null,"valores.get(0): " + valores.get(0) );
+//            JOptionPane.showMessageDialog(null,"valores.get(1): " + valores.get(1) );
+     
+            LinkedList<String> tempo_val = new LinkedList<>();
+            
+            for ( int i=0; i<1000; i++) {
+                char tem = (char) (valores.get(0).charAt(0) + i );
+                if (tem >= valores.get(1).charAt(0)){
+                    i = 1000;
+                }
+                tempo_val.add(String.valueOf(tem));
+                //tempo_val = (char) ('A' + i );
+            }
+//            JOptionPane.showMessageDialog(null,"tempo_val: " + tempo_val );
+
+            //Variables n_var = new Variables(var_tempo, valores, "R");
+            valores = tempo_val;
+            Variables n_var = new Variables(var_tempo, valores, "C");
             lis_var.add(n_var);
             var_tempo ="";
         }
